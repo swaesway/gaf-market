@@ -304,7 +304,7 @@
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="myproduct.php">
             <i class="bi bi-cart3" style="font-size: large;"></i><span>My Products</span>
           </a>
         </li>
@@ -318,12 +318,12 @@
         </a>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="#">
+            <a href="purchases.php">
               <i class="bi bi-bag-heart-fill" style="font-size: large;"></i><span>Purchases</span>
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="bookmarks.php">
               <i class="bi bi-bookmarks" style="font-size: large;"></i><span>Bookmarks</span>
             </a>
           </li>
@@ -337,7 +337,7 @@
         </a>
         <ul id="history-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="#">
+            <a href="contactUs.php">
               <i class="bi bi-chat-left-text" style="font-size: large;"></i><span>Contact us</span>
             </a>
           </li>
