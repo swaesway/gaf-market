@@ -38,3 +38,6 @@ button:focus {
 }
 
 
+.line{
+  display: inline !important;
+}

@@ -74,7 +74,7 @@ include('header.php');
                   </div>
                   <input type="file" id="formFileLg" name="productImages[]" class="d-none" multiple onchange="displayFilePreviews()" />
                   <small id="fileError" class="text-danger"></small>
-                  <div id="preview-container" class="mt-3"></div> <!-- Container for image previews -->
+                  <div id="preview-container" class="mt-3 line"></div> <!-- Container for image previews -->
                 </div>
 
                 <div class="row justify-content-center text-center">
