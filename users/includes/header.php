@@ -31,6 +31,7 @@
   <!-- Main CSS File -->
   <link href="../../assets/css/style.css" rel="stylesheet">
   <link href="../../assets/css/addproduct.css" rel="stylesheet">
+  <link href="../../assets/css/contactUs.css" rel="stylesheet">
 </head>
 
 <style>
