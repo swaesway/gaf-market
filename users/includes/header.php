@@ -56,14 +56,14 @@
     <div class="container-fluid">
     <form class="d-flex">
       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-primary btn-sm text-white" type="submit">Search</button>
+      <button class="btn btn-outline-warning btn-sm text-white" type="submit">Search</button>
     </form>
   </div>
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-cart text-white"></i>
+            <i class="bi bi-bookmark text-white"></i>
             <span class="badge bg-primary badge-number"></span>
           </a><!-- End Notification Icon -->
 <!-- 
