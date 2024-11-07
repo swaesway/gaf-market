@@ -21,7 +21,7 @@ include('header.php');
             <div class="container-fluid px-1 mx-auto mt-n1">
                 <div class="row d-flex justify-content-center">
                     <div class="col-xl-7 col-lg-8 col-md-9 col-11">
-                        <div class="card">
+                        <div class="add-product-card card">
                             <div class="contact-image">
                                 <img src="https://image.ibb.co/kUagtU/rocket_contact.png" alt="rocket_contact" />
                             </div>
