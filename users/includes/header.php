@@ -319,11 +319,6 @@
           <i class="bi bi-diagram-3-fill"></i><span>History</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li> 
-            <a href="purchases.php">
-              <i class="bi bi-bag-heart-fill" style="font-size: large;"></i><span>Purchases</span>
-            </a>
-          </li>
           <li>
             <a href="bookmarks.php">
               <i class="bi bi-bookmarks" style="font-size: large;"></i><span>Bookmarks</span>
