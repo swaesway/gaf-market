@@ -23,9 +23,9 @@ function renderProductCard($name, $date, $title, $price, $description, $imageSrc
                 <button class='btn' style='border: none; background: none; margin: 0 10px;'>
                     <i class='bi bi-bookmark icon' aria-label='Bookmark'></i>
                 </button>
-                <button class='btn' style='border: none; background: none; margin: 0 10px;' data-bs-toggle='modal' data-bs-target='#contactmodal'>
-                    <i class='bi bi-telephone icon' aria-label='Contact seller'></i>
-                </button>
+                <a href='viewmore.php' class='btn' style='border: none; background: none; margin: 0 10px;'>
+                    <i class='bi bi-info-circle icon' aria-label='More info'></i>
+                </a>
             </div>
         </div>
     </div>
