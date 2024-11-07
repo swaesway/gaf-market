@@ -21,7 +21,8 @@ include('header.php');
       <div class="container-fluid px-1 mx-auto mt-n1">
         <div class="row d-flex justify-content-center">
           <div class="col-xl-7 col-lg-8 col-md-9 col-11">
-            <div class="card">
+
+            <div class="card add-product-card">
               <h5 class="text-center mb-2">Product Upload</h5>
               <form class="form-card" onsubmit="validateForm(event)">
                 <div class="row justify-content-between text-left my-4">
