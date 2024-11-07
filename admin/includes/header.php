@@ -28,12 +28,17 @@
   <link href="../../assets/vendor/quill/quill.bubble.css" rel="stylesheet">
   <link href="../../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="../../assets/vendor/simple-datatables/style.css" rel="stylesheet">
-
   <!-- Main CSS File -->
   <link href="../../assets/css/style.css" rel="stylesheet">
+  <link href="../../assets/css/addproduct.css" rel="stylesheet">
+  <link href="../../assets/css/contactUs.css" rel="stylesheet">
 </head>
 
-
+<style>
+  .header{
+    background-color: #0a2d02;
+  }
+</style>
 
 <body>
 
@@ -41,20 +46,20 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
-        <span class="d-none d-lg-block"><small>GAF-commerce</small></span>
+      <a href="home.php" class="logo d-flex align-items-center">
+        <img src="../../uploads/logo.png" alt="">
+        <span class="d-none d-lg-block text-white"><small>GAF-MARKET</small></span>
       </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
+      <i class="bi bi-list toggle-sidebar-btn text-white"></i>
     </div><!-- End Logo -->
 
-
+    <div class="container-fluid">
+  </div>
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-
         <li class="nav-item dropdown">
-
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-bell"></i>
+            <i class="bi bi-bookmark text-white"></i>
             <span class="badge bg-primary badge-number"></span>
           </a><!-- End Notification Icon -->
 <!-- 
@@ -129,7 +134,7 @@
         <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-chat-left-text"></i>
+            <i class="bi bi-chat-left-text text-white"></i>
             <span class="badge bg-success badge-number"></span>
           </a><!-- End Messages Icon -->
 
@@ -196,13 +201,13 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="../../assets/img/avatar.png" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2"></span>
+            <span class="d-none d-md-block dropdown-toggle ps-2 text-white"></span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6></h6>
-              <span>Administrator</span>
+              <span>John Doe</span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -254,113 +259,95 @@
   </header><!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
+  <aside id="sidebar" class="sidebar"> 
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="./Dashboard.php">
-          <i class="bi bi-grid"></i>
+        <a class="nav-link " href="dashboard.php">
+          <i class="bi bi-grid-3x2-gap"></i>
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
-      <!-- <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-database-add"></i><span>Add Resources</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-funnel-fill"></i><span>Filter Products</span><i class="bi bi-chevron-down ms-auto"></i>
+          </a>
+      <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="add-driver.php">
-              <i class="bi bi-person-plus-fill" style="font-size: large;"></i><span>Add Driver</span>
-            </a>
+            <!-- Price Filter Button -->
+            <button class="btn btn-link nav-link bg-transparent ms-3" data-bs-toggle="modal" data-bs-target="#priceFilterModal">
+                <i class="bi bi-cash" style="font-size: large;"></i><span style="font-size: 14px;">Price</span>
+            </button>
           </li>
           <li>
-            <a href="add-bus.php">
-              <i class="bi bi-bus-front" style="font-size: large;"></i><span>Add a Bus</span>
-            </a>
+            <!-- Category Filter Button -->
+            <button class="btn btn-link nav-link bg-transparent ms-3" data-bs-toggle="modal" data-bs-target="#categoryFilterModal">
+                <i class="bi bi-bar-chart-line " style="font-size: large;"></i><span style="font-size: 14px;">Categories</span>
+            </button>
           </li>
-        </ul>
-      </li>End resources Nav -->
-      <!-- <li class="nav-item">
+      </ul>
+    </li>
+      <!-- End resources Nav -->
+            <li class="nav-item">
 
-<a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-  <i class="bi bi-credit-card"></i><span>Cards</span><i class="bi bi-chevron-down ms-auto"></i>
-</a>
-<ul id="icons-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-  <li>
-    <a href="Cards.php">
-      <i class="bi bi-plus-circle-fill" style="font-size: large;"></i><span>Add a new card</span>
-    </a>
-  </li>
-</ul>
-</li> -->
+      <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-cart-plus-fill"></i><span>Products</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="icons-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="addproduct.php">
+            <i class="bi bi-plus-circle-fill" style="font-size: large;"></i><span>Add Product</span>
+          </a>
+        </li>
+        <li>
+          <a href="myproduct.php">
+            <i class="bi bi-cart3" style="font-size: large;"></i><span>My Products</span>
+          </a>
+        </li>
+      </ul>
+      </li>
 
-      <!-- <li class="nav-item">
+      <li class="nav-item">
 
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-diagram-3-fill"></i><span>Actions</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-diagram-3-fill"></i><span>History</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="view-drivers.php">
-              <i class="bi bi-eye" style="font-size: large;"></i><span>View Drivers</span>
+          <li> 
+            <a href="purchases.php">
+              <i class="bi bi-bag-heart-fill" style="font-size: large;"></i><span>Purchases</span>
             </a>
           </li>
           <li>
-            <a href="view-buses.php">
-              <i class="bi bi-bus-front-fill" style="font-size: large;"></i><span>View Buses</span>
-            </a>
-          </li>
-          <li>
-            <a href="view-customers.php">
-              <i class="bi bi-person-fill" style="font-size: large;"></i><span>View Customers</span>
+            <a href="bookmarks.php">
+              <i class="bi bi-bookmarks" style="font-size: large;"></i><span>Bookmarks</span>
             </a>
           </li>
         </ul>
       </li>
-       -->
-      <!-- End action Nav -->
+      
 
-      <!-- <li class="nav-item"> -->
-        <!-- <a class="nav-link collapsed" data-bs-target="#history-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-clock-history"></i><span>Reports</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a> -->
-        <!-- <ul id="history-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#history-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-gear"></i><span>Settings</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="history-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="Report-Cards.php">
-              <i class="bi bi-person-vcard" style="font-size: large;"></i><span>Card Bookings</span>
+            <a href="contactUs.php">
+              <i class="bi bi-chat-left-text" style="font-size: large;"></i><span>Contact us</span>
             </a>
           </li>
           <li>
-            <a href="Cards-TopUp.php">
-              <i class="bi bi-credit-card-2-front" style="font-size: large;"></i><span>Card TopUps</span>
+            <a href="#">
+              <i class="bi bi-box-arrow-right" style="font-size: large;"></i><span>Logout</span>
             </a>
           </li>
-          <li>
-            <a href="Report-Passengers.php">
-              <i class="bi bi-person-lines-fill" style="font-size: large;"></i><span>Passenger Bookings</span>
-            </a>
-          </li>
-          <li>
-            <a href="USSD-report.php">
-              <i class="bi bi-phone" style="font-size: large;"></i><span>USSD Bookings</span>
-            </a>
-          </li>
-          <li>
-            <a href="Report-Paymnets.php">
-              <i class="bi bi-wallet-fill" style="font-size: large;"></i><span>Payments</span>
-            </a>
-          </li>
-          <li>
-            <a href="Revenue.php">
-              <i class="bi bi-bar-chart-line-fill" style="font-size: large;"></i><span>Revenue Report</span>
-            </a>
-          </li>
-        </ul> -->
-<!-- </li> -->
+        </ul> 
+</li>
 
-       
+      
 
 
 
@@ -370,6 +357,76 @@
 
   </aside><!-- End Sidebar-->
 
+
+<!-- Price Filter Modal -->
+<div class="modal fade" id="priceFilterModal" tabindex="-1" aria-labelledby="priceFilterModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="priceFilterModalLabel">Filter by Price</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+            <form>
+               <div class="mb-3">
+                  <label for="minPrice" class="form-label">Minimum Price</label>
+                  <input type="number" class="form-control" id="minPrice" placeholder="Enter minimum price">
+               </div>
+               <div class="mb-3">
+                  <label for="maxPrice" class="form-label">Maximum Price</label>
+                  <input type="number" class="form-control" id="maxPrice" placeholder="Enter maximum price">
+               </div>
+               <button type="submit" class="btn btn-primary" >Apply Filter</button>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- Category Filter Modal -->
+<!-- Category Filter Modal with Radio Options -->
+<div class="modal fade" id="categoryFilterModal" tabindex="-1" aria-labelledby="categoryFilterModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="categoryFilterModalLabel">Filter by Categories</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+            <form>
+               <p>Select Categories:</p>
+               <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="electronics" name="category" value="electronics">
+                  <label class="form-check-label" for="electronics">Electronics</label>
+               </div>
+               <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="footwear" name="category" value="footwear">
+                  <label class="form-check-label" for="footwear">Footwear</label>
+               </div>
+               <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="food-stuffs" name="category" value="food-stuffs">
+                  <label class="form-check-label" for="food-stuffs">Food Stuffs</label>
+               </div>
+               <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="clothing" name="category" value="clothing">
+                  <label class="form-check-label" for="clothing">Clothing</label>
+               </div>
+               <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="grocery" name="category" value="grocery">
+                  <label class="form-check-label" for="grocery">Grocery</label>
+               </div>
+               <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="home-appliances" name="category" value="home-appliances">
+                  <label class="form-check-label" for="home-appliances">Home Appliances</label>
+               </div>
+               <button type="submit" class="btn btn-primary mt-3">Apply Filter</button>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+
+
   <?php
-include('./footer.php');
+include('footer.php');
   ?>
