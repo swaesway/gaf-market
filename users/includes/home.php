@@ -195,35 +195,7 @@ include('productCard.php'); // Include the product card component
                             </div>
                         </div>
 
-                        <div class="card-body">
-                            <h5 class="card-title">What's New<span>| Stores</span></h5>
-                            <div class="activity">
-                                <div class="activity-item d-flex">
-                                    <i class='bi bi-diagram-3 activity-badge text-success align-self-start'></i>
-                                    <div class="activity-content ms-2">
-                                        <small><a href="#" class="fw-small text-dark topsellers">Nana Addo Dankwa</a></small>
-                                    </div>
-                                </div>
-                                <div class="activity-item d-flex">
-                                    <i class='bi bi-diagram-3 activity-badge text-success align-self-start'></i>
-                                    <div class="activity-content ms-2">
-                                        <small><a href="#" class="fw-small text-dark topsellers">Bawumia Mahamadu</a></small>
-                                    </div>
-                                </div>
-                                <div class="activity-item d-flex">
-                                    <i class='bi bi-diagram-3 activity-badge text-success align-self-start'></i>
-                                    <div class="activity-content ms-2">
-                                        <small><a href="#" class="fw-small text-dark topsellers">Nana Addo Dankwa</a></small>
-                                    </div>
-                                </div>
-                                <div class="activity-item d-flex">
-                                    <i class='bi bi-diagram-3 activity-badge text-success align-self-start'></i>
-                                    <div class="activity-content ms-2">
-                                        <small><a href="#" class="fw-small text-dark topsellers">Bawumia Mahamadu</a></small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                
                     </div>
                     <!-- End Top Sellers -->
                 </div>
@@ -231,29 +203,6 @@ include('productCard.php'); // Include the product card component
         </section>
     </div>
 
-    <!-- Contact Modal -->
-    <div class="modal fade" id="contactmodal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="contactModalLabel">Product Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam quod, itaque totam iste labore dolor, fugit ipsam adipisci nemo quasi, tempora minima dolorum eligendi obcaecati recusandae blanditiis ab in? Deleniti.</p>
-                    <p>Price: GHC 200.00</p>
-                    <p>Item Owner: Bawumia Mahamadu</p>
-                    <p>Contact: 0556524653</p>
-                    <div class="mb-3 text-center">
-                        <button class="btn btn-primary" style="width: 100%;">Request callback</button>
-                    </div>
-                    <div class="mb-3 text-center">
-                        <a href="viewmore.php"><button class="btn btn-primary" style="width: 100%;">View more</button></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    
 </body>
 </html>
