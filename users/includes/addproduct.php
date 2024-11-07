@@ -22,7 +22,7 @@ include('header.php');
         <div class="row d-flex justify-content-center">
           <div class="col-xl-7 col-lg-8 col-md-9 col-11">
             <div class="card">
-              <h5 class="text-center mb-4">Product Upload</h5>
+              <h5 class="text-center mb-2">Product Upload</h5>
               <form class="form-card" onsubmit="validateForm(event)">
                 <div class="row justify-content-between text-left my-4">
                   <div class="form-group col-sm-6 flex-column d-flex">
@@ -74,7 +74,7 @@ include('header.php');
                   </div>
                   <input type="file" id="formFileLg" name="productImages[]" class="d-none" multiple onchange="displayFilePreviews()" />
                   <small id="fileError" class="text-danger"></small>
-                  <div id="preview-container" class="mt-3"></div> <!-- Container for image previews -->
+                  <div id="preview-container" class="mt-3 line"></div> <!-- Container for image previews -->
                 </div>
 
                 <div class="row justify-content-center text-center">
