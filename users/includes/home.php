@@ -1,7 +1,7 @@
 <?php
 session_start();
 include('header.php');
-
+include('productCard.php'); // Include the product card component
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,57 +11,129 @@ include('header.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GAF-commerce Home</title>
     <style>
+        /* General Styles */
+        .main {
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        /* Product Card Styles */
+        .col-6 {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+        }
+
+        .card {
+            flex: 1;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+    
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 8px;
+            font-size: 13px;
+        }
+
+        .card-body {
+            padding: 0; /* Remove padding for a tighter layout */
+        }
+
+        .card-title {
+            font-size: 13px;
+            font-weight: 500;
+            margin: 4px 0; /* Adjust margins for compactness */
+        }
+
+        .description {
+            font-size: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin: 4px 0; /* Adjust margins for compactness */
+        }
+
         .imageupload {
             display: flex;
             justify-content: center;
             align-items: center;
             width: 100%;
             overflow: hidden;
-            border-radius: 15px;
-            /* Rounded border */
+            border-radius: 6px;
+            margin-top: 6px;
         }
 
         .imageupload img {
-            width: 80%;
-            border-radius: 15px;
-            object-fit: cover;
+            width: 100%; /* Full width of the card */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 6px 6px 0 0; /* Round only the top corners */
+            object-fit: cover; /* Cover the container without distortion */
+            max-height: 150px; /* Set a maximum height for uniformity */
         }
-        
+
+        .card-footer {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 6px;
+            font-size: 1em;
+        }
+
         .card-footer i {
-        cursor: pointer;
-        font-size: 1.4em;
-        transition: color 0.3s ease;
+            cursor: pointer;
+            color: #007bff;
+            transition: color 0.3s ease;
         }
 
         .card-footer i:hover {
-        color: red; 
+            color: #e63946;
         }
-        .topsellers
-        {
+
+        /* Top Sellers Section */
+        .topsellers {
             display: -webkit-box;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            -webkit-line-clamp: 1; 
-            line-height: 1.5; 
-            max-height: calc(1.5em * 2); 
+            -webkit-line-clamp: 1;
+            line-height: 1.5;
+            max-height: calc(1.5em * 2);
+            font-size: 13px;
         }
 
-        .row > .col-6 {
-        display: flex;
-        flex-direction: column;
-    }
+        /* Modal Styles */
+        .modal-content {
+            padding: 15px;
+        }
 
-    .card {
-        flex: 1;
-    }
+        .modal-body p {
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
 
-    .description {
-        display: -webkit-box;
-        -webkit-line-clamp: 3; /* Limit to 3 lines */
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+        .modal-footer .btn {
+            width: 100%;
+            font-size: 13px;
+        }
+
+        .btn  .icon {
+        color: #13B206; /* Default icon color */
+        transition: color 0.3s ease; /* Smooth transition for hover effect */
+        }
+
+         .btn:hover .icon {
+        color: #EEC108; /* Icon color on hover */
+        }
 
     </style>
 </head>
@@ -72,112 +144,115 @@ include('header.php');
         <section class="section">
             <div class="row align-items-top">
                 <div class="col-lg-9">
-                    <!-- Default Card -->
+                    <!-- Product Cards -->
                     <div class="row">
-                        <div class="col-6">
-                        <div class="card">
-                        <div class="card-header">
-                            <small  style="font-size: 17px;">Bawumia Mahamadu</small><br>
-                            <small  style="font-size: 12px;"> 25th October, 2024, 10:43</small>
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-title">Army uniform - ww2</h6>
-                            <h6 class="">Price: GHC 10,000</h6>
-                            <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum quasi 
-                                assumenda animi autem ullam praesentium laudantium nihil consectetur. Quas, obcaecati.</p>
-                            <div class="imageupload">
-                                <img src="../../uploads/uniform.jpeg" alt="">
-                            </div>
-                        </div>
-                        <div class="card-footer text-center text-white">
-                        <i class="bi bi-cart-plus mx-3 text-primary"></i> 
-                        <i class="bi bi-bookmark mx-3 text-primary"></i>
-                        <button class="btn btn-transparent" data-bs-toggle="modal" data-bs-target="#contactmodal"><i class="bi bi-telephone mx-3 text-primary"></i></button>                          
-                        </div>
-                    </div><!-- End Card with header and footer -->
-                        </div>
-                        <div class="col-6">
-                        <div class="card">
-                        <div class="card-header">
-                        <small  style="font-size: 17px;">Nana Addo Dankwa</small><br>
-                        <small style="font-size: 12px;"> 25th October, 2024, 10:43</small>
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-title">Army boots -Russia</h6>
-                            <h6 class="">Price: GHC 3,000,000.00</h6>
-                            <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, dignissimos. 
-                                Tempora porro officia a, iste explicabo aliquid 
-                                architecto dolor nulla.</p>
-                            <div class="imageupload">
-                                <img src="../../uploads/boots.jpeg" alt="">
-                            </div>
-                        </div>
-                        <div class="card-footer text-center text-white">
-                        <i class="bi bi-cart-plus mx-3 text-primary"></i> 
-                        <i class="bi bi-bookmark mx-3 text-primary"></i>      
-                        <i class="bi bi-telephone mx-3 text-primary"></i>
-                        </div>
-                    </div><!-- End Card with header and footer -->
-                        </div>
+                        <?php
+                        
+                        renderProductCard("Bawumia Mahamadu", "25th October, 2024, 10:43", "Army uniform - WW2", "10,000", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum quasi assumenda animi autem ullam praesentium laudantium nihil consectetur. Quas, obcaecati.", "../../uploads/uniform.jpeg");
 
+                        renderProductCard("Nana Addo Dankwa", "25th October, 2024, 10:43", "Army boots - Russia", "3,000,000", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, dignissimos. Tempora porro officia a, iste explicabo aliquid architecto dolor nulla.", "../../uploads/boots.jpeg");
+                        
+                        renderProductCard("Bawumia Mahamadu", "25th October, 2024, 10:43", "Army uniform - WW2", "10,000", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum quasi assumenda animi autem ullam praesentium laudantium nihil consectetur. Quas, obcaecati.", "../../uploads/uniform.jpeg");
+
+                        renderProductCard("Nana Addo Dankwa", "25th October, 2024, 10:43", "Army boots - Russia", "3,000,000", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, dignissimos. Tempora porro officia a, iste explicabo aliquid architecto dolor nulla.", "../../uploads/boots.jpeg");
+
+                        ?>
                     </div>
-                    <!-- Card with header and footer -->
-                    
+                    <!-- End Product Cards -->
                 </div>
+
                 <div class="col-md-3">
-                    <!-- Recent Activity -->
-                    <div class="card">
+                    <!-- Top Sellers -->
+                    <div class="card" style='padding:0 0 40px 30px;'>
                         <div class="card-body">
                             <h5 class="card-title">Top Sellers<span>| Stores</span></h5>
-
                             <div class="activity">
                                 <div class="activity-item d-flex">
                                     <i class='bi bi-diagram-3 activity-badge text-success align-self-start'></i>
                                     <div class="activity-content ms-2">
                                         <small><a href="#" class="fw-small text-dark topsellers">Nana Addo Dankwa</a></small>
                                     </div>
-                                </div><!-- End activity item-->
-                                <div class="activity">
+                                </div>
                                 <div class="activity-item d-flex">
                                     <i class='bi bi-diagram-3 activity-badge text-success align-self-start'></i>
                                     <div class="activity-content ms-2">
-                                        <small><a href="#" class="fw-small text-dark topsellers">Bawumia Mahamadu </a></small>
+                                        <small><a href="#" class="fw-small text-dark topsellers">Bawumia Mahamadu</a></small>
                                     </div>
-                                </div><!-- End activity item-->
-
+                                </div>
+                                <div class="activity-item d-flex">
+                                    <i class='bi bi-diagram-3 activity-badge text-success align-self-start'></i>
+                                    <div class="activity-content ms-2">
+                                        <small><a href="#" class="fw-small text-dark topsellers">Nana Addo Dankwa</a></small>
+                                    </div>
+                                </div>
+                                <div class="activity-item d-flex">
+                                    <i class='bi bi-diagram-3 activity-badge text-success align-self-start'></i>
+                                    <div class="activity-content ms-2">
+                                        <small><a href="#" class="fw-small text-dark topsellers">Bawumia Mahamadu</a></small>
+                                    </div>
+                                </div>
                             </div>
-
                         </div>
-                    </div><!-- End Recent Activity -->
 
-
-
+                        <div class="card-body">
+                            <h5 class="card-title">What's New<span>| Stores</span></h5>
+                            <div class="activity">
+                                <div class="activity-item d-flex">
+                                    <i class='bi bi-diagram-3 activity-badge text-success align-self-start'></i>
+                                    <div class="activity-content ms-2">
+                                        <small><a href="#" class="fw-small text-dark topsellers">Nana Addo Dankwa</a></small>
+                                    </div>
+                                </div>
+                                <div class="activity-item d-flex">
+                                    <i class='bi bi-diagram-3 activity-badge text-success align-self-start'></i>
+                                    <div class="activity-content ms-2">
+                                        <small><a href="#" class="fw-small text-dark topsellers">Bawumia Mahamadu</a></small>
+                                    </div>
+                                </div>
+                                <div class="activity-item d-flex">
+                                    <i class='bi bi-diagram-3 activity-badge text-success align-self-start'></i>
+                                    <div class="activity-content ms-2">
+                                        <small><a href="#" class="fw-small text-dark topsellers">Nana Addo Dankwa</a></small>
+                                    </div>
+                                </div>
+                                <div class="activity-item d-flex">
+                                    <i class='bi bi-diagram-3 activity-badge text-success align-self-start'></i>
+                                    <div class="activity-content ms-2">
+                                        <small><a href="#" class="fw-small text-dark topsellers">Bawumia Mahamadu</a></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Top Sellers -->
                 </div>
-
-            </section>
+            </div>
+        </section>
     </div>
 
+    <!-- Contact Modal -->
     <div class="modal fade" id="contactmodal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
-   <div class="modal-dialog">
-      <div class="modal-content">
-         <div class="modal-header">
-            <h5 class="modal-title" id="contactmodal">Details</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-         </div>
-         <div class="modal-body">
-           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam quod, itaque totam iste labore 
-            dolor, fugit ipsam adipisci nemo quasi, tempora minima dolorum eligendi obcaecati recusandae 
-            blanditiis ab in? Deleniti.</p>
-            <p>Price: GHC 200.00</p>
-            <p>Item Owner: Bawumia Mahamadu</p>
-            <p>Contact: 0556524653</p>
-            <div  class="mb-3 text-center">
-            <button class="btn btn-primary" style="width: 100%;">Request callback</button>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contactModalLabel">Product Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam quod, itaque totam iste labore dolor, fugit ipsam adipisci nemo quasi, tempora minima dolorum eligendi obcaecati recusandae blanditiis ab in? Deleniti.</p>
+                    <p>Price: GHC 200.00</p>
+                    <p>Item Owner: Bawumia Mahamadu</p>
+                    <p>Contact: 0556524653</p>
+                    <div class="mb-3 text-center">
+                        <button class="btn btn-primary" style="width: 100%;">Request callback</button>
+                    </div>
+                    <div class="mb-3 text-center">
+                        <a href="viewmore.php"><button class="btn btn-primary" style="width: 100%;">View more</button></a>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3 text-center">
-                <a href="viewmore.php"><button class="btn btn-primary" style="width: 100%;">View more</button></a>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
+        </div>
+    </div>
+
+</body>
+</html>
