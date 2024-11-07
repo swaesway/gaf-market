@@ -682,7 +682,7 @@ h6 {
   align-items: center;
   font-size: 15px;
   font-weight: 600;
-  color: #4154f1;
+  color: #162e14 !important;
   transition: 0.3;
   background: #f6f9ff;
   padding: 10px 15px;
@@ -692,11 +692,11 @@ h6 {
 .sidebar-nav .nav-link i {
   font-size: 16px;
   margin-right: 10px;
-  color: #4154f1;
+  color: #162e14 !important;
 }
 
 .sidebar-nav .nav-link.collapsed {
-  color: #012970;
+  color: #162e14 !important;
   background: #fff;
 }
 
@@ -705,12 +705,12 @@ h6 {
 }
 
 .sidebar-nav .nav-link:hover {
-  color: #4154f1;
+  color: #40b337 !important;
   background: #f6f9ff;
 }
 
 .sidebar-nav .nav-link:hover i {
-  color: #4154f1;
+  color: #40b337 !important;
 }
 
 .sidebar-nav .nav-link .bi-chevron-down {
@@ -733,7 +733,7 @@ h6 {
   align-items: center;
   font-size: 14px;
   font-weight: 600;
-  color: #012970;
+  color: #162e14;
   transition: 0.3;
   padding: 10px 0 10px 40px;
   transition: 0.3s;
@@ -748,7 +748,7 @@ h6 {
 
 .sidebar-nav .nav-content a:hover,
 .sidebar-nav .nav-content a.active {
-  color: #4154f1;
+  color: #40b337;
 }
 
 .sidebar-nav .nav-content a.active i {
