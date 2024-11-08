@@ -7,7 +7,7 @@ include('header.php');
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - Manage Users</title>
+  <title>My Products - GAF Market</title>
 
   <!-- Google Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -26,11 +26,12 @@ include('header.php');
   <!-- Main Content -->
   <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Manage Users</h1>
+      <h1>My Products</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="admin.php">Home</a></li>
-          <li class="breadcrumb-item active">Manage Users</li>
+          <li class="breadcrumb-item active">Products</li>
+          <li class="breadcrumb-item active">My Products</li>
         </ol>
       </nav>
     </div>
@@ -40,7 +41,7 @@ include('header.php');
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">User List</h5>
+              <h5 class="card-title">Produtct List</h5>
 
               <!-- Search Input (Handled by DataTables) -->
               <!-- <div class="input-group mb-3">
