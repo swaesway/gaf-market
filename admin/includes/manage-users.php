@@ -23,7 +23,6 @@ include('header.php');
 
 <body>
   <!-- Sidebar -->
-  <?php include('sidebar.php'); ?>
 
   <!-- Main Content -->
   <main id="main" class="main">
