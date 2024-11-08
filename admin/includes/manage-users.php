@@ -94,7 +94,6 @@ include('header.php');
   </main><!-- End #main -->
 
   <!-- Footer -->
-  <?php include('admin/includes/footer.php'); ?>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
