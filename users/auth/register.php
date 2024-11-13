@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 
 
 ?>
@@ -49,10 +49,10 @@
             <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
       unset($_SESSION['error']); 
-  }
-  elseif(isset($_SESSION['success'])) {
+  } 
+  if(isset($_SESSION['success'])) {
       echo '<div class="alert alert-primary alert-dismissible mt-2 fade show" role="alert">
-            '.$_SESSION['success'].'<a class ="" href="login.php">login</a>
+            '.$_SESSION['success'].' '." ".'<a class ="" href="login.php">here</a>
             <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
       unset($_SESSION['success']);
@@ -67,7 +67,8 @@
 
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
-                  <span class="d-none d-lg-block"></span>
+                <img src="../../uploads/logo.png" alt="" style="size: 100px;">
+                  <span class="d-none d-lg-block">GAF-Market</span>
                 </a>
               </div><!-- End Logo -->
 

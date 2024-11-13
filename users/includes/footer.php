@@ -14,7 +14,7 @@
 <script src="../../assets/vendor/php-email-form/validate.js"></script>
 
 <!-- Template Main JS File -->
-<script src="../../assets/js/main.js"></script>
+<script src="../../assets/js/main.js"></script> 
 <script>
   var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
   var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {

@@ -1,7 +1,8 @@
 <?php
-session_start();
+include('../../db/db.php');
 include('header.php');
-include('bookmarkedCards.php'); 
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +10,7 @@ include('bookmarkedCards.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GAF-commerce Bookmark</title>
+    <title>GAF-commerce Home</title>
     <style>
         /* General Styles */
         .main {
@@ -17,128 +18,147 @@ include('bookmarkedCards.php');
             background-color: #f9f9f9;
         }
 
-        /* Product Card Styles */
-        .col-lg-4, .col-md-6, .col-sm-12 {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 1rem;
-        }
 
         .card {
+            position: relative;
             flex: 1;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            padding: 8px;
             margin-bottom: 10px;
+            padding: 8px;
         }
 
-        .card-header {
+        .imageupload {
+            position: relative;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            padding: 4px 8px;
-            font-size: 13px;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .imageupload img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            max-height: 150px;
         }
 
         .card-body {
             padding: 0;
         }
 
-        .card-title {
-            font-size: 13px;
-            font-weight: 500;
-            margin: 4px 0;
-        }
-
-        .description {
-            font-size: 12px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin: 4px 0;
-        }
-
-        .imageupload {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            overflow: hidden;
-            border-radius: 6px;
-            margin-top: 6px;
-            height: 150px; /* Consistent height for images */
-        }
-
-        .imageupload img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 6px;
-        }
-
         .card-footer {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
+            display: block;
+            justify-content: space-between;
+            align-items: center;
             padding: 6px;
             font-size: 1em;
+            background-color: #f1f1f1;
+            border-radius: 0 0 8px 8px;
         }
 
-        .card-footer i {
-            cursor: pointer;
-            color: #007bff;
+        /* Bookmark icon overlay */
+        .bookmark-icon-wrapper {
+            position: absolute;
+            bottom: 1px;
+            left: 75%;
+            background: white;
+            border-radius: 50%;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .bookmark-icon-wrapper i {
+            font-size: 18px;
+            color: green;
             transition: color 0.3s ease;
         }
 
-        .card-footer i:hover {
-            color: #e63946;
+        .bookmark-icon-wrapper:hover i {
+            color: yellowgreen;
         }
 
-        .btn .icon {
-            color: #13B206;
-            transition: color 0.3s ease;
+        /* Text Styling in Footer */
+        .footer-text {
+            font-size: 13px;
+            font-weight: bold;
+            color: #555;
         }
 
-        .btn:hover .icon {
-            color: #EEC108;
+        .card-link {
+            display: block;
         }
     </style>
 </head>
 
 <body>
-    <div class="main" id="main">
-        <div class="pagetitle">
-            <h1>Bookmark</h1>
-            <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="home.php">Home</a></li>
-                    <li class="breadcrumb-item">History</li>
-                    <li class="breadcrumb-item active">Bookmark</li>
-                </ol>
-            </nav>
-        </div><!-- End Page Title -->
-
+    <main id="main" class="main">
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="home.php">Home</a></li>
+                <li class="breadcrumb-item">History</li>
+                <li class="breadcrumb-item active">Bookmarks</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
         <section class="section">
-            <div class="row align-items-top">
-                <div class="col-lg-12">
-                    <!-- Product Cards -->
-                    <div class="row">
-                        <?php
-                        renderProductCard("Yaw D.Luffy", "25th October, 2024, 10:43", "Army uniform - WW2", "10,000", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum quasi assumenda animi autem ullam praesentium laudantium nihil consectetur. Quas, obcaecati.", "../../uploads/uniform.jpeg");
-                        renderProductCard("Abena Uchiha ", "30th September, 2024, 10:43", "Army boots - Russia", "3,000,000", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, dignissimos. Tempora porro officia a, iste explicabo aliquid architecto dolor nulla.", "../../uploads/boots.jpeg");
-                        renderProductCard("Akosua Adjei Ichigo", "5th July, 2024, 10:43", "Army uniform - WW2", "10,000", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum quasi assumenda animi autem ullam praesentium laudantium nihil consectetur. Quas, obcaecati.", "../../uploads/uniform.jpeg");
-                        renderProductCard("Kofi Uzumaki", "2nd May, 2024, 10:43", "Army boots - Russia", "3,000,000", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, dignissimos. Tempora porro officia a, iste explicabo aliquid architecto dolor nulla.", "../../uploads/boots.jpeg");
-                        ?>
+            
+            <div class="row">
+                <?php
+                $userid = $_SESSION['userId'];
+                $query = "SELECT * FROM productimgs WHERE userid != ? GROUP BY productid";
+                $stmt = mysqli_prepare($conn, $query);
+                mysqli_stmt_bind_param($stmt, "i", $userid);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+
+                foreach ($result as $key => $value) {
+                    # code...
+                    echo "
+               
+              <div class='col-lg-3'>
+                <a href='viewmore.php?productid=".$value['productid']."&sellerid=".$value['userid']."&id=".$value['id']."' class='card-link'>
+                            <div class='card'>
+                                <div class='card-body'>
+                                    <div class='imageupload'>
+                                        <img src='../../productsimgs/" . $value['path'] . "' alt=''>
+                                        <!-- Bookmark Icon Overlay -->
+                                        <button class='btn'>
+                                        <div class='bookmark-icon-wrapper'>
+                                            <i class='bi bi-bookmarks-fill icon' aria-label='Bookmark'></i>
+                                        </div>
+                                        </button>
+                                        
+                                    </div>
+                        </div>
+                        <!-- Card Footer with additional text -->
+                        <div class='card-footer'>
+                         <p class='footer-text ms-2'>" . $value['title'] . "</p>
+                         <p class='footer-text ms-2'>GHC  " . $value['price'] . "</p>
+                        </div>
                     </div>
-                    <!-- End Product Cards -->
-                </div>
+                    </a>
+                            </div>
+                ";
+                }
+                ?>
+
+
+
             </div>
         </section>
-    </div>
+    </main>
+
+
 </body>
 
 </html>

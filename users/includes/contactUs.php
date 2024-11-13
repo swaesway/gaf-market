@@ -6,7 +6,6 @@ include('header.php');
 
 <main id="main" class="main">
     <div class="pagetitle">
-        <h1>Contact Us</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="home.php">Home</a></li>
@@ -18,44 +17,7 @@ include('header.php');
 
     <section class="section contact">
 
-      <div class="row gy-4">
-
-        <div class="col-xl-6">
-
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="info-box card">
-                <i class="bi bi-geo-alt text-success"></i>
-                <h3 class="text-success">Address</h3>
-                <p>A108 Adam Street,<br>New York, NY 535022</p>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="info-box card">
-                <i class="bi bi-telephone text-success"></i>
-                <h3 class="text-success">Call Us</h3>
-                <p>+1 5589 55488 55<br>+1 6678 254445 41</p>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="info-box card">
-                <i class="bi bi-envelope text-success"></i>
-                <h3 class="text-success">Email Us</h3>
-                <p>info@example.com<br>contact@example.com</p>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="info-box card">
-                <i class="bi bi-clock text-success"></i>
-                <h3 class="text-success">Open Hours</h3>
-                <p>Monday - Friday<br>9:00AM - 05:00PM</p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="col-xl-6">
+      <div class="row gy-4 ">
           <div class="card p-4">
             <form action="forms/contact.php" method="post" class="php-email-form">
               <div class="row gy-4">
@@ -86,9 +48,6 @@ include('header.php');
 
               </div>
             </form>
-          </div>
-
-        </div>
 
       </div>
 

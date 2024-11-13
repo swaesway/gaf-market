@@ -1,7 +1,8 @@
 <?php
-session_start();
+include('../../db/db.php');
 include('header.php');
-include('productCard.php'); // Include the product card component
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,192 +18,138 @@ include('productCard.php'); // Include the product card component
             background-color: #f9f9f9;
         }
 
-        /* Product Card Styles */
-        .col-6 {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 1rem;
-        }
 
         .card {
+            position: relative;
             flex: 1;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            padding: 8px;
             margin-bottom: 10px;
-           
-        }
-
-    
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 4px 8px;
-            font-size: 13px;
-        }
-
-        .card-body {
-            padding: 0; /* Remove padding for a tighter layout */
-        }
-
-        .card-title {
-            font-size: 13px;
-            font-weight: 500;
-            margin: 4px 0; /* Adjust margins for compactness */
-        }
-
-        .description {
-            font-size: 12px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin: 4px 0; /* Adjust margins for compactness */
+            padding: 8px;
         }
 
         .imageupload {
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
             width: 100%;
             overflow: hidden;
-            border-radius: 6px;
-            margin-top: 6px;
+            border-radius: 8px;
         }
 
         .imageupload img {
-            width: 100%; /* Full width of the card */
-            height: auto; /* Maintain aspect ratio */
-            border-radius: 6px 6px 0 0; /* Round only the top corners */
-            object-fit: cover; /* Cover the container without distortion */
-            max-height: 150px; /* Set a maximum height for uniformity */
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            max-height: 150px;
+        }
+
+        .card-body {
+            padding: 0;
         }
 
         .card-footer {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
+            display: block;
+            justify-content: space-between;
+            align-items: center;
             padding: 6px;
             font-size: 1em;
+            background-color: #f1f1f1;
+            border-radius: 0 0 8px 8px;
         }
 
-        .card-footer i {
-            cursor: pointer;
-            color: #007bff;
+        /* Bookmark icon overlay */
+        .bookmark-icon-wrapper {
+            position: absolute;
+            bottom: 1px;
+            left: 75%;
+            background: white;
+            border-radius: 50%;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .bookmark-icon-wrapper i {
+            font-size: 18px;
+            color: green;
             transition: color 0.3s ease;
         }
 
-        .card-footer i:hover {
-            color: #e63946;
+        .bookmark-icon-wrapper:hover i {
+            color: yellowgreen;
         }
 
-        /* Top Sellers Section */
-        .topsellers {
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            -webkit-line-clamp: 1;
-            line-height: 1.5;
-            max-height: calc(1.5em * 2);
+        /* Text Styling in Footer */
+        .footer-text {
             font-size: 13px;
+            font-weight: bold;
+            color: #555;
         }
 
-        /* Modal Styles */
-        .modal-content {
-            padding: 15px;
+        .card-link {
+            display: block;
         }
-
-        .modal-body p {
-            margin-bottom: 6px;
-            font-size: 14px;
-        }
-
-        .modal-footer .btn {
-            width: 100%;
-            font-size: 13px;
-        }
-
-        .btn  .icon {
-        color: #13B206; /* Default icon color */
-        transition: color 0.3s ease; /* Smooth transition for hover effect */
-        }
-
-         .btn:hover .icon {
-        color: #EEC108; /* Icon color on hover */
-        }
-
     </style>
 </head>
 
 <body>
-
-    <div class="main" id="main">
+    <main id="main" class="main">
         <section class="section">
-            <div class="row align-items-top">
-                <div class="col-lg-9">
-                    <!-- Product Cards -->
-                    <div class="row">
-                        <?php
-                        
-                        renderProductCard("Yaw D.Luffy", "25th October, 2024, 10:43", "Army uniform - WW2", "10,000", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum quasi assumenda animi autem ullam praesentium laudantium nihil consectetur. Quas, obcaecati.", "../../uploads/uniform.jpeg");
+            <h5>Trending Products</h5>
+            <div class="row">
+                <?php
+                $userid = $_SESSION['userId'];
+                $query = "SELECT * FROM productimgs WHERE userid != ? GROUP BY productid";
+                $stmt = mysqli_prepare($conn, $query);
+                mysqli_stmt_bind_param($stmt, "i", $userid);
+                $stmt->execute();
+                $result = $stmt->get_result();
 
-                        renderProductCard("Abena Uchiha ", "30th September, 2024, 10:43", "Army boots - Russia", "3,000,000", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, dignissimos. Tempora porro officia a, iste explicabo aliquid architecto dolor nulla.", "../../uploads/boots.jpeg");
-                        
-                        renderProductCard("Akosua Adjei Ichigo", "5th July, 2024, 10:43", "Army uniform - WW2", "10,000", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum quasi assumenda animi autem ullam praesentium laudantium nihil consectetur. Quas, obcaecati.", "../../uploads/uniform.jpeg");
 
-                        renderProductCard("Kofi Uzumaki", "2th May, 2024, 10:43", "Army boots - Russia", "3,000,000", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, dignissimos. Tempora porro officia a, iste explicabo aliquid architecto dolor nulla.", "../../uploads/boots.jpeg");
-
-                        ?>
-                    </div>
-                    <!-- End Product Cards -->
-                </div>
-
-                <div class="col-md-3">
-                    <!-- Top Sellers -->
-                    <div class="card" style='padding:0 0 40px 30px;'>
-                        <div class="card-body">
-                            <h5 class="card-title">Top Sellers<span>| Stores</span></h5>
-                            <div class="activity">
-                                <div class="activity-item d-flex">
-                                    <i class='bi bi-diagram-3 activity-badge text-success align-self-start'></i>
-                                    <div class="activity-content ms-2">
-                                        <small><a href="#" class="fw-small text-dark topsellers">Nana Addo Dankwa</a></small>
+                foreach ($result as $key => $value) {
+                    # code...
+                    echo "
+               
+              <div class='col-lg-3'>
+                <a href='viewmore.php?productid=".$value['productid']."&sellerid=".$value['userid']."&id=".$value['id']."' class='card-link'>
+                            <div class='card'>
+                                <div class='card-body'>
+                                    <div class='imageupload'>
+                                        <img src='../../productsimgs/" . $value['path'] . "' alt=''>
+                                        <!-- Bookmark Icon Overlay -->
+                                        <button class='btn'>
+                                        <div class='bookmark-icon-wrapper'>
+                                            <i class='bi bi-bookmarks icon' aria-label='Bookmark'></i>
+                                        </div>
+                                        </button>
+                                        
                                     </div>
-                                </div>
-                                <div class="activity-item d-flex">
-                                    <i class='bi bi-diagram-3 activity-badge text-success align-self-start'></i>
-                                    <div class="activity-content ms-2">
-                                        <small><a href="#" class="fw-small text-dark topsellers">Bawumia Mahamadu</a></small>
-                                    </div>
-                                </div>
-                                <div class="activity-item d-flex">
-                                    <i class='bi bi-diagram-3 activity-badge text-success align-self-start'></i>
-                                    <div class="activity-content ms-2">
-                                        <small><a href="#" class="fw-small text-dark topsellers">Nana Addo Dankwa</a></small>
-                                    </div>
-                                </div>
-                                <div class="activity-item d-flex">
-                                    <i class='bi bi-diagram-3 activity-badge text-success align-self-start'></i>
-                                    <div class="activity-content ms-2">
-                                        <small><a href="#" class="fw-small text-dark topsellers">Bawumia Mahamadu</a></small>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-
-                
+                        <!-- Card Footer with additional text -->
+                        <div class='card-footer'>
+                         <p class='footer-text ms-2'>" . $value['title'] . "</p>
+                         <p class='footer-text ms-2'>GHC  " . $value['price'] . "</p>
+                        </div>
                     </div>
-                    <!-- End Top Sellers -->
-                </div>
+                    </a>
+                            </div>
+                ";
+                }
+                ?>
+
+
+
             </div>
         </section>
-    </div>
+    </main>
 
-    
+
 </body>
+
 </html>
