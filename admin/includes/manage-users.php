@@ -76,7 +76,6 @@ include('header.php');
                             <td><span class='badge bg-" . ($user['status'] == 'Active' ? 'success' : 'danger') . "'>{$user['status']}</span></td>
                             <td>
                               <a href='view-user.php?id={$user['id']}' class='btn btn-primary btn-sm'><i class='bi bi-eye'></i> View</a>
-                              <a href='block-user.php?id={$user['id']}' class='btn btn-warning btn-sm'><i class='bi bi-lock'></i> Block</a>
                               <a href='suspend-user.php?id={$user['id']}' class='btn btn-danger btn-sm'><i class='bi bi-x-circle'></i> Suspend</a>
                             </td>
                           </tr>";
