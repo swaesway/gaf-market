@@ -63,7 +63,7 @@ session_start();
 
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
-                  <span class="d-none d-lg-block"><small>GAF commerce - Admin Portal</small></span>
+                  <span class="d-none d-lg-block" style="color: #0a2d02;"><h4 class="fw-bold">GAF Market - Admin Portal</h4></span>
                 </a>
               </div><!-- End Logo -->
 
@@ -72,7 +72,7 @@ session_start();
                 <div class="card-body">
 
                   <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
+                    <h5 class="card-title text-center pb-0 fs-4" style="color: #0a2d02;">Login to Your Account</h5>
                     <p class="text-center small">Enter your email & password to login</p>
                   </div>
 
@@ -92,7 +92,7 @@ session_start();
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit" name="loginbtn">Login into Account</button>
+                      <button class="btn btn-success w-100" type="submit" name="loginbtn">Login</button>
                     </div>
                     <div class="col-12">
                     </div>
