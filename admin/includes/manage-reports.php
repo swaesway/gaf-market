@@ -75,8 +75,7 @@ include('header.php');
                             <td>{$report['user']}</td>
                             <td><span class='badge bg-" . ($report['status'] == 'Resolved' ? 'success' : 'warning') . "'>{$report['status']}</span></td>
                             <td>
-                              <a href='view-report.php?id={$report['id']}' class='btn btn-primary btn-sm'><i class='bi bi-eye'></i> View</a>
-                              <a href='resolve-report.php?id={$report['id']}' class='btn btn-success btn-sm'><i class='bi bi-check-circle'></i> Resolve</a>
+                              <a href='view-report.php?id={$report['id']}' class='d-flex justify-content-center'><i class='bi bi-eye'></i></a>
                             </td>
                           </tr>";
                   }
