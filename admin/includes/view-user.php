@@ -49,7 +49,7 @@ include('header.php');
         text-align: left;
     }
 
-    label{
+    label {
         font-weight: 800;
     }
 
@@ -83,8 +83,7 @@ include('header.php');
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">User Profile</h5>
-                            <div class="profile-container text-center">
+                            <div class="profile-container text-center pt-5">
                                 <div class="rounded-image">
                                     <img src="../../assets/img/avatar.png" alt="User Avatar" class="profile-img" />
                                 </div>
@@ -97,8 +96,21 @@ include('header.php');
                                 </div>
                             </div>
 
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
                             <table class="table datatable mt-5" id="productsTable">
-                                <h3>Product Uploaded by User</h3>
+                                <h3 class="mt-5">Product Uploaded by User</h3>
                                 <thead>
                                     <tr>
                                         <th scope="col">Product ID</th>
@@ -138,8 +150,8 @@ include('header.php');
                                     ?>
                                 </tbody>
                             </table>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
