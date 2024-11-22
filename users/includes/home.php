@@ -2,6 +2,61 @@
 include('../../db/db.php');
 include('header.php');
 
+if(isset($_POST['bookmarkbtn']))
+{
+    $sellerid = $_POST['sellerid'];
+    $boomarkerid = $_POST['bookmarker'];
+    $productid = $_POST['productid'];
+    $userid =   $_SESSION['userId'];
+
+    $query = "INSERT INTO bookmarks(productid, sellerid, bookmarker) VALUES(?,?,?)";
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, 'sii',$productid, $sellerid, $boomarkerid);
+    $result = mysqli_stmt_execute($stmt);
+
+
+}
+
+$no_result = "";
+$searchkey = "";
+
+if(isset($_POST['searchbtn']))
+{
+    $searchkey = $_POST['search'];
+    $query = "SELECT * FROM productimgs 
+    WHERE MATCH(title, category, description, price) AGAINST(? IN NATURAL LANGUAGE MODE) 
+    GROUP BY productid";
+
+    $stmt = mysqli_prepare($conn, $query);  
+    $searchTerm = "%$searchkey%";
+    mysqli_stmt_bind_param($stmt, 's', $searchTerm);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if (mysqli_num_rows($result) === 0) {
+        $searchTerm = "%$searchkey%";
+        $query = "SELECT * FROM productimgs 
+                  WHERE title LIKE ? 
+                     OR category LIKE ? 
+                     OR description LIKE ? 
+                     OR price LIKE ? 
+                  GROUP BY productid";
+        $stmt = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($stmt, 'ssss', $searchTerm, $searchTerm, $searchTerm,  $searchTerm);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    }
+
+    if (mysqli_num_rows($result) === 0) {
+        $no_result = "No Products Were Found";
+    }
+} else {
+    $query = "SELECT * FROM productimgs GROUP BY productid";
+    $stmt = mysqli_prepare($conn, $query);
+    $stmt->execute();
+    $result = $stmt->get_result();
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -28,6 +83,10 @@ include('header.php');
             overflow: hidden;
             margin-bottom: 10px;
             padding: 8px;
+        }
+        .card:hover
+        {
+            transform: scale(1.05);
         }
 
         .imageupload {
@@ -104,30 +163,29 @@ include('header.php');
             <h5>Trending Products</h5>
             <div class="row">
                 <?php
-                $userid = $_SESSION['userId'];
-                $query = "SELECT * FROM productimgs WHERE userid != ? GROUP BY productid";
-                $stmt = mysqli_prepare($conn, $query);
-                mysqli_stmt_bind_param($stmt, "i", $userid);
-                $stmt->execute();
-                $result = $stmt->get_result();
-
 
                 foreach ($result as $key => $value) {
                     # code...
                     echo "
                
               <div class='col-lg-3'>
-                <a href='viewmore.php?productid=".$value['productid']."&sellerid=".$value['userid']."&id=".$value['id']."' class='card-link'>
                             <div class='card'>
                                 <div class='card-body'>
                                     <div class='imageupload'>
+                                        <a href='viewmore.php?productid=".$value['productid']."&sellerid=".$value['userid']."&id=".$value['id']."' class='card-link'>
                                         <img src='../../productsimgs/" . $value['path'] . "' alt=''>
+                                        </a>
                                         <!-- Bookmark Icon Overlay -->
-                                        <button class='btn'>
+                                        <form method='POST' action='home.php'>
+                                        <input type='hidden'  name='productid' value=".$value['productid'].">
+                                        <input type='hidden' name='bookmarker' value=".$userid.">
+                                        <input type='hidden' name='sellerid' value=".$value['userid'].">
+                                        <button class='btn' type='submit' name='bookmarkbtn'>
                                         <div class='bookmark-icon-wrapper'>
                                             <i class='bi bi-bookmarks icon' aria-label='Bookmark'></i>
                                         </div>
                                         </button>
+                                        </form>
                                         
                                     </div>
                         </div>
@@ -137,12 +195,18 @@ include('header.php');
                          <p class='footer-text ms-2'>GHC  " . $value['price'] . "</p>
                         </div>
                     </div>
-                    </a>
+                    
                             </div>
                 ";
                 }
                 ?>
 
+<?php 
+
+if (isset($no_result)) {
+    echo '<h5 class="mt-5 text-center">'.$no_result.'</h5>';
+}
+?>
 
 
             </div>

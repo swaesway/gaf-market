@@ -2,6 +2,13 @@
 
 session_start();
 
+if (isset($_SESSION['user'])) {
+ if (($_SESSION['user'] == 'true')) {
+  # code...
+  echo "<script>window.location.href='../includes/home.php'</script>";
+ }
+}
+
 ?>
 
 

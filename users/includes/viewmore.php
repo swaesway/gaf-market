@@ -156,22 +156,22 @@ $date = (new DateTime($time))->format('Y-m-d')
            
                 <div class="card">
                 <?php
-        if(isset($_SESSION['error'])) {
-          echo '<div class="alert alert-danger alert-dismissible mt-2 fade show" role="alert">
-                '.$_SESSION['error'].'
-                <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>';
-          unset($_SESSION['error']); 
-      } 
-      if(isset($_SESSION['success'])) {
-          echo '<div class="alert alert-primary alert-dismissible mt-2 fade show" role="alert">
-                '.$_SESSION['success'].'
-                <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>';
-          unset($_SESSION['success']);
-      }
+                    if(isset($_SESSION['error'])) {
+                        echo '<div class="alert alert-danger alert-dismissible mt-2 fade show" role="alert">
+                                '.$_SESSION['error'].'
+                                <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>';
+                        unset($_SESSION['error']); 
+                    } 
+                    if(isset($_SESSION['success'])) {
+                        echo '<div class="alert alert-primary alert-dismissible mt-2 fade show" role="alert">
+                                '.$_SESSION['success'].'
+                                <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>';
+                        unset($_SESSION['success']);
+                         }
         
-        ?>
+                            ?>
                     <div class="card-header">
                         <small style="font-size: 15px; color: #919191;"><?php echo $sellername  ?></small><br>
                         <small style="font-size: 11px; color: #919191"><?php echo $time ?></small>
@@ -270,7 +270,7 @@ $date = (new DateTime($time))->format('Y-m-d')
             </div>
         </div>
     </section>
-</div>
+</div> 
 
 
 <!-- Report Modal -->
@@ -400,7 +400,6 @@ if(isset($_POST['ngtbtn']))
     } else {
         $_SESSION['error'] = "An Error occured";
     }
-    echo $header, $amount, $message;
 
     echo '<script>window.location.href="viewmore.php?productid=' . $productid .'&sellerid='.$sellerid. '&id=' . $id . '";</script>';
         exit();

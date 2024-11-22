@@ -2,12 +2,6 @@
 session_start();
 include('../db/db.php');
 include('header.php');
-if (isset($_SESSION['user'])) {
-    if (($_SESSION['user'] == 'true')) {
-     # code...
-     echo "<script>window.location.href='../users/includes/home.php'</script>";
-    }
-   }
 
 $no_result = "";
 $searchkey = "";
@@ -73,11 +67,13 @@ if(isset($_POST['searchbtn']))
             overflow: hidden;
             margin-bottom: 10px;
             padding: 8px;
+            
         }
         .card:hover
         {
             transform: scale(1.05);
         }
+
         .imageupload {
             position: relative;
             display: flex;
@@ -149,48 +145,58 @@ if(isset($_POST['searchbtn']))
 <body>
     <main id="main" class="main">
         <section class="section">
-            <h5>Trending Products</h5>
-            <div class="row">
+            <div class="row ">
                 <?php
 
-                foreach ($result as $key => $value) {
-                    # code...
-                    echo "
-               
-              <div class='col-lg-3'>
-                
-                            <div class='card'>
-                                <div class='card-body'>
-                                    <div class='imageupload'>
-                                    <a href='viewmore.php?productid=".$value['productid']."&sellerid=".$value['userid']."&id=".$value['id']."' class='card-link'>
-                                        <img src='../productsimgs/" . $value['path'] . "' alt=''>
-                                        </a>
-                                        <!-- Bookmark Icon Overlay -->
-                                    
-                                        
-                                    </div>
-                                         
-                        </div>
-                        <!-- Card Footer with additional text -->
-                        <div class='card-footer'>
-                         <p class='footer-text ms-2'>" . $value['title'] . "</p>
-                         <p class='footer-text ms-2'>GHC  " . $value['price'] . "</p>
+foreach ($result as $key => $value) {
+    # code...
+    echo "
+<div class='col-lg-3'>
+
+            <div class='card'>
+                <div class='card-body'>
+                    <div class='imageupload'>
+                    <a href='viewmore.php?productid=".$value['productid']."&sellerid=".$value['userid']."&id=".$value['id']."' class='card-link'>
+                        <img src='../productsimgs/" . $value['path'] . "' alt=''>
+                        </a>
+                        <!-- Bookmark Icon Overlay -->
+                    
+                        
+                    </div>
+                         
+        </div>
+        <!-- Card Footer with additional text -->
+        <div class='card-footer'>
+         <p class='footer-text ms-2'>" . $value['title'] . "</p>
+         <p class='footer-text ms-2'>GHC  " . $value['price'] . "</p>
+        </div>
+    </div>
+
+            </div>
+";
+}
+?>
+
+<?php 
+
+    if (isset($no_result)) {
+        echo '<h5 class="mt-5 text-center">'.$no_result.'</h5>';
+    }
+?>                
+            <div class="col-lg-4 right-side-items">
+                <!-- Recent Activity -->
+
+                <!-- Report Options -->
+                <div class="card right-card">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-sm custom-button text-danger" data-toggle="modal" data-target="#exampleModal">
+                                <i class="bi bi-flag-fill me-2"></i>Report Content
+                            </button>
                         </div>
                     </div>
-               
-                            </div>
-                ";
-                }
-                ?>
-
-                <?php 
-
-                    if (isset($no_result)) {
-                        echo '<h5 class="mt-5 text-center">'.$no_result.'</h5>';
-                    }
-                ?>
-
-
+                </div><!-- End Report Options -->
+            </div>
                 
             </div>
         </section>

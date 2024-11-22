@@ -33,13 +33,10 @@ $inyears = $interval->y;
 $date = (new DateTime($time))->format('Y-m-d')
 
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GAF-MARKET <?php echo $productid?></title>
+    <title>GAF-MARKET</title>
+    
     <style>
         /* Main card and image container adjustments */
         .card {
@@ -133,7 +130,7 @@ $date = (new DateTime($time))->format('Y-m-d')
         .custom-button:hover {
             color: #EEC108;
             border-color: #EEC108;
-        }
+        } 
 
         .text-small {
             font-size: smaller;
@@ -156,7 +153,25 @@ $date = (new DateTime($time))->format('Y-m-d')
     <section class="section">
         <div class="row align-items-top">
             <div class="col-lg-8">
+           
                 <div class="card">
+                <?php
+        if(isset($_SESSION['error'])) {
+          echo '<div class="alert alert-danger alert-dismissible mt-2 fade show" role="alert">
+                '.$_SESSION['error'].'
+                <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>';
+          unset($_SESSION['error']); 
+      } 
+      if(isset($_SESSION['success'])) {
+          echo '<div class="alert alert-primary alert-dismissible mt-2 fade show" role="alert">
+                '.$_SESSION['success'].'
+                <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>';
+          unset($_SESSION['success']);
+      }
+        
+        ?>
                     <div class="card-header">
                         <small style="font-size: 15px; color: #919191;"><?php echo $sellername  ?></small><br>
                         <small style="font-size: 11px; color: #919191"><?php echo $time ?></small>
@@ -175,11 +190,11 @@ $date = (new DateTime($time))->format('Y-m-d')
                                     <img id="mainImage" class="main-image" src="../productsimgs/'.$value['path'].'" alt="Product Image">
                                     
                                     ';
-                                } 
+                                }
                             ?>
                             <!-- Sub Images -->
-                             <?php  
-                             $multipathquery = "SELECT path FROM productimgs Where id = ? OR productid = ? GROUP BY id ";
+                             <?php 
+                             $multipathquery = "SELECT path FROM productimgs Where id = ? OR productid = ? GROUP BY id";
                              $multipathstmt = mysqli_prepare($conn, $multipathquery);
                              mysqli_stmt_bind_param($multipathstmt,"is",$id, $productid);
                              $multipathstmt->execute();
@@ -212,10 +227,6 @@ $date = (new DateTime($time))->format('Y-m-d')
                     <div class="card-body">
                         <h6 style="font-weight: bold;"><?php  echo $title?></h6>
                         <h6 style="font-weight: bold;">Price: GHC<?php echo  " ".$price ?></h6>
-                        <div class="text-center">
-                            <button  type="button" class="btn btn-sm custom-button" data-toggle="modal" data-target="#requestModal">Request callback</button>
-                            <button type="button"  class="btn btn-sm custom-button" data-toggle="modal" data-target="#negotiateModal">Negotiate Price</button>
-                        </div>
                     </div>
                 </div><!-- End Recent Activity -->
 
@@ -246,11 +257,8 @@ $date = (new DateTime($time))->format('Y-m-d')
                 <div class="card right-card">
                     <div class="card-body">
                         <div class="text-center">
-                            <button class="btn btn-sm custom-button text-danger">
-                                <i class="bi bi-ban me-2"></i>Report User
-                            </button>
                             <button type="button" class="btn btn-sm custom-button text-danger" data-toggle="modal" data-target="#exampleModal">
-                                <i class="bi bi-flag-fill me-2"></i>Report Product
+                                <i class="bi bi-flag-fill me-2"></i>Report Content
                             </button>
                         </div>
                     </div>
@@ -258,7 +266,7 @@ $date = (new DateTime($time))->format('Y-m-d')
             </div>
         </div>
     </section>
-</div>
+</div> 
 
 
 <!-- Report Modal -->
@@ -274,9 +282,9 @@ $date = (new DateTime($time))->format('Y-m-d')
       </div>
         
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <form action="viewmore.php?productid=<?php echo $productid ?>&sellerid=<?php echo $sellerid ?>&id=<?php echo $id?>" method="POST">
-        <button type="submit" class="btn btn-danger text-white" name="report">Send Report</button>
+            <Textarea class="mt-1 form-control mb-2" rows="6" name="description" cols="55" placeholder="Describe your report" required></Textarea>
+        <button type="submit" class="btn btn-danger text-white" style="float: right;" name="report">Send Report</button>
         </form>
       </div>
     </div>
@@ -284,57 +292,15 @@ $date = (new DateTime($time))->format('Y-m-d')
 </div>
 
 
-
-<!-- callback Modal -->
-<div class="modal fade" id="requestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Request a callback from <?php echo $sellername?></h5>
-      </div>
-      <form action="viewmore.php?productid=<?php echo $productid ?>&sellerid=<?php echo $sellerid ?>&id=<?php echo $id?>" method="POST">
-      <div class="modal-body">
-        <textarea name="callbackmessage" class="form-control" required id="" rows="6" cols="55" placeholder="enter a message"></textarea>
-      </div>
-        
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-warning text-white" name="request">Request callback</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!--negotiate modal-->
-<div class="modal fade" id="negotiateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Negotiate a price. Current price GHC <?php echo $price?></h5>
-      </div>
-      <form action="viewmore.php?productid=<?php echo $productid ?>&sellerid=<?php echo $sellerid ?>&id=<?php echo $id?>" method="POST">
-      <div class="modal-body">
-        <input type="number" class="form-control mb-2" name="amountngt" id="" placeholder="enter amount to negotiate">
-        <textarea name="ngtmessage" class="form-control" required id="" rows="6" cols="55" placeholder="enter a message"></textarea>
-      </div>
-        
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-warning text-white" name="ngtbtn">Negotiate</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 <?php
 if(isset($_POST['report']))
 {
-    $query = "INSERT INTO reports(userid, productid) VALUES(?,?)";
+    $description = $_POST['description'];
+    $query = "INSERT INTO reports(userid, productid, description) VALUES(?,?,?)";
     $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "is", $sellerid, $productid);
+    mysqli_stmt_bind_param($stmt, "iss", $sellerid, $productid, $description);
     $result = $stmt->execute();
 
     if ($result) {
@@ -349,54 +315,29 @@ if(isset($_POST['report']))
     
     mysqli_stmt_close($stmt);
 }
-
-if(isset($_POST['request']))
-{
-    $header = $_SESSION['username']." "."Requested a call back on"." ".$title;
-    $message = $_POST['callbackmessage'];
-    $query = "INSERT INTO callback(header, message, receiver) VALUES(?,?,?)";
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "sss", $header, $message, $sellerid);
-    $result = $stmt->execute();
-
-    if ($result) {
-        $_SESSION['success'] = "Callback has been requested, Thank you!";
-    } else {
-        $_SESSION['error'] = "An Error occured";
-    }
-
-
-    echo '<script>window.location.href="viewmore.php?productid=' . $productid .'&sellerid='.$sellerid. '&id=' . $id . '";</script>';
-        exit();
-    
-    mysqli_stmt_close($stmt);
-}
-
-if(isset($_POST['ngtbtn'])) 
-{
-    $header = $_SESSION['username']." "."is requesting for a negotiation on"." ".$title;
-    $amount = "Amount negotiated was GHC"." ".$_POST['amountngt']." "."on product"." ".$title." ".$price;
-    $message = $_POST['ngtmessage'];
-
-    $query = "INSERT INTO ngtchat(header, amount, message, receiver) VALUES(?,?,?,?)";
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "ssss", $header,$amount, $message, $sellerid);
-    $result = $stmt->execute();
-
-    if ($result) {
-        $_SESSION['success'] = "Your request has been sent, Thank you!";
-    } else {
-        $_SESSION['error'] = "An Error occured";
-    }
-    echo $header, $amount, $message;
-
-    echo '<script>window.location.href="viewmore.php?productid=' . $productid .'&sellerid='.$sellerid. '&id=' . $id . '";</script>';
-        exit();
-    
-    mysqli_stmt_close($stmt);
-}
-
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
 
 <script>
     // Function to change the main image on clicking sub-images
@@ -404,5 +345,4 @@ if(isset($_POST['ngtbtn']))
         document.getElementById('mainImage').src = src;
     }
 </script>
-</body>
-</html>
+

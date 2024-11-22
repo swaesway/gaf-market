@@ -126,11 +126,12 @@ include('header.php');
                     echo "
                
               <div class='col-lg-3'>
-                <a href='viewmore.php?productid=".$value['productid']."&sellerid=".$value['userid']."&id=".$value['id']."' class='card-link'>
                             <div class='card'>
                                 <div class='card-body'>
                                     <div class='imageupload'>
+                                    <a href='viewmore.php?productid=".$value['productid']."&sellerid=".$value['userid']."&id=".$value['id']."' class='card-link'>
                                         <img src='../../productsimgs/" . $value['path'] . "' alt=''>
+                                           </a>
                                         <!-- Bookmark Icon Overlay -->
                                         <button class='btn'>
                                         <div class='bookmark-icon-wrapper'>
@@ -146,7 +147,7 @@ include('header.php');
                          <p class='footer-text ms-2'>GHC  " . $value['price'] . "</p>
                         </div>
                     </div>
-                    </a>
+                 
                             </div>
                 ";
                 }

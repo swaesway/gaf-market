@@ -1,9 +1,17 @@
 <?php
 session_start();
 include('../../db/db.php');
-if (!($_SESSION['user'] == 'true')) {
-  echo "<script>window.location.href='../../guest/home.php'</script>";
+if(isset($_SESSION['user'])){
+  if (!($_SESSION['user'] == 'true')) {
+    echo "<script>window.location.href='../../guest/home.php'</script>";
+  }
 }
+else{
+  echo "<script>window.location.href='../../guest/home.php'</script>";
+
+}
+
+
 $userid = $_SESSION['userId'];
 $query = "SELECT * FROM callback WHERE receiver = ?";
 $stmt = mysqli_prepare($conn, $query);
@@ -24,6 +32,9 @@ $ngtcount = mysqli_num_rows($ngtresult);
 $totalcount = $ngtcount + $callbackcount;
 
 $stmtngt->close();
+
+
+
 
 
 
@@ -122,6 +133,69 @@ $stmtngt->close();
     overflow-y: auto;
     max-height: 450px;
   }
+  .sidebar-nav {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.sidebar-nav > li {
+    margin-bottom: 15px;
+    background: #f6f9ff;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.sidebar-nav .filter-section {
+    margin-bottom: 15px;
+}
+
+.sidebar-nav .filter-section h6 {
+    color: #012970;
+    font-weight: 600;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.sidebar-nav .filter-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.sidebar-nav .filter-option input {
+    margin-right: 10px;
+}
+
+.apply-filter-btn {
+    width: 100%;
+    background-color: #006400;
+    font-weight: lighter;    
+    color: white;
+    border: none;
+    letter-spacing: 2px;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.apply-filter-btn:hover {
+    background-color: #00693E;
+}
+
+.price-range-inputs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.price-range-inputs input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
 </style>
 
 <body>
@@ -138,10 +212,10 @@ $stmtngt->close();
     </div><!-- End Logo -->
 
     <div class="container-fluid">
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-warning btn-sm text-white" type="submit">Search</button>
-      </form>
+    <form class="d-flex" method="post" action="home.php">
+      <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-warning btn-sm text-white" name="searchbtn" type="submit">Search</button>
+    </form>
     </div>
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -284,80 +358,58 @@ $stmtngt->close();
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
 
+  <form id="product-filter-form" method="POST" action="">
     <ul class="sidebar-nav" id="sidebar-nav">
+        <!-- Categories Filter -->
+        <li>
+            <div class="filter-section">
+                <h6>Product Categories</h6>
+                <div class="filter-option">
+                    <input type="checkbox" id="cat-electronics" name="categories[]" value="electronics">
+                    <label for="cat-electronics">Electronics</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="cat-fashion" name="categories[]" value="fashion">
+                    <label for="cat-fashion">Fashion</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="cat-home-decor" name="categories[]" value="home-decor">
+                    <label for="cat-home-decor">Home & Decor</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="cat-books" name="categories[]" value="books">
+                    <label for="cat-books">Books</label>
+                </div>
+            </div>
+        </li>
 
-      <li class="nav-item">
-        <a class="nav-link " href="home.php">
-          <i class="bi bi-house-fill"></i>
-          <span>Home</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
+        <!-- Price Range Filter -->
+        <li>
+            <div class="filter-section">
+                <h6>Price Range</h6>
+                <div class="price-range-inputs">
+                    <input type="number" name="min_price" placeholder="Min Price" min="0">
+                    <input type="number" name="max_price" placeholder="Max Price" min="0">
+                </div>
+            </div>
+        </li>
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-funnel-fill"></i><span>Filter Products</span>
-        </a>
-      </li>
-      <!-- End resources Nav -->
-      <li class="nav-item">
+        <!-- Brands Filter -->
+        
 
-        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-cart-plus-fill"></i><span>Products</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="icons-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="addproduct.php">
-              <i class="bi bi-plus-circle-fill" style="font-size: large;"></i><span>Add Product</span>
-            </a>
-          </li>
-          <li>
-            <a href="myproduct.php">
-              <i class="bi bi-cart3" style="font-size: large;"></i><span>My Products</span>
-            </a>
-          </li>
-        </ul>
-      </li>
+        <!-- Additional Filters -->
+       
 
-      <li class="nav-item">
+        <!-- Sorting Options -->
 
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-diagram-3-fill"></i><span>History</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="bookmarks.php">
-              <i class="bi bi-bookmarks" style="font-size: large;"></i><span>Bookmarks</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#history-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-gear"></i><span>Settings</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="history-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="contactUs.php">
-              <i class="bi bi-chat-left-text" style="font-size: large;"></i><span>Contact us</span>
-            </a>
-          </li>
-          <li>
-            <a href="header.php?action=logout">
-              <i class="bi bi-box-arrow-right" style="font-size: large;"></i><span>Logout</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-
-
-
-
-
-
-
+        <!-- Apply Filters Button -->
+        <li>
+            <button type="submit" class="apply-filter-btn">
+                Apply Filters
+            </button>
+        </li>
     </ul>
+</form>
 
   </aside><!-- End Sidebar-->
 
