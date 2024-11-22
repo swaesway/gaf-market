@@ -56,6 +56,7 @@ include('header.php');
                     <th scope="col">#</th>
                     <th scope="col">Username</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Telephone</th>
                     <th scope="col">Status</th>
                     <th scope="col">Actions</th>
                   </tr>
@@ -64,15 +65,17 @@ include('header.php');
                   <?php
                   // Sample data for users (replace with database query)
                   $users = [
-                    ['id' => 1, 'username' => 'johndoe', 'email' => 'johndoe@example.com', 'status' => 'Active'],
-                    ['id' => 2, 'username' => 'janedoe', 'email' => 'janedoe@example.com', 'status' => 'Suspended'],
-                    ['id' => 3, 'username' => 'alexsmith', 'email' => 'alexsmith@example.com', 'status' => 'Active']
-                  ];
+                    ['id' => 1, 'username' => 'johndoe', 'email' => 'johndoe@example.com', 'telephone' => '123-456-7890', 'status' => 'Active'],
+                    ['id' => 2, 'username' => 'janedoe', 'email' => 'janedoe@example.com', 'telephone' => '123-456-7891', 'status' => 'Suspended'],
+                    ['id' => 3, 'username' => 'alexsmith', 'email' => 'alexsmith@example.com', 'telephone' => '123-456-7892', 'status' => 'Active']
+                ];
+                
                   foreach ($users as $user) {
                     echo "<tr>
                             <th scope='row'>{$user['id']}</th>
                             <td>{$user['username']}</td>
                             <td>{$user['email']}</td>
+                            <td>{$user['telephone']}</td>
                             <td><span class='badge bg-" . ($user['status'] == 'Active' ? 'success' : 'danger') . "'>{$user['status']}</span></td>
                             <td>
                               <a href='view-user.php' class='d-flex justify-content-center'><i class='bi bi-eye'></i></a>
