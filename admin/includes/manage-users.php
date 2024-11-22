@@ -63,7 +63,6 @@ include('header.php');
                 </thead>
                 <tbody>
                   <?php
-                  // Sample data for users (replace with database query)
                   $users = [
                     ['id' => 1, 'username' => 'johndoe', 'email' => 'johndoe@example.com', 'telephone' => '123-456-7890', 'status' => 'Active'],
                     ['id' => 2, 'username' => 'janedoe', 'email' => 'janedoe@example.com', 'telephone' => '123-456-7891', 'status' => 'Suspended'],
