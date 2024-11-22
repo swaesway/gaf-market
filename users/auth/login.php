@@ -43,7 +43,14 @@ if (isset($_SESSION['user'])) {
 
   <!--  Main CSS File -->
   <link href="../../assets/css/style.css" rel="stylesheet">
-
+  
+  <style>
+    body{
+      background-image: url('../../uploads/gafbg.jpg');
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
+  </style>
 </head>
 
 <body>

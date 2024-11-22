@@ -318,7 +318,7 @@ $stmtngt->close();
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="profile.php">
+              <a class="dropdown-item d-flex align-items-center" target="_blank" href="../../myshop/includes/myshop.php">
                 <i class="bi bi-house"></i>
                 <span>My Shop</span>
               </a>
