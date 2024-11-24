@@ -317,3 +317,46 @@
   }
 
 })();
+
+
+// Custom JS For Limiting Refresh
+
+// Maximum allowed refreshes and reset duration (in milliseconds)
+const MAX_REFRESHES = 5;
+const RESET_DURATION = 24 * 60 * 60 * 1000; // 24 hours
+
+// Keys for storing refresh count and last reset time in localStorage
+const REFRESH_COUNT_KEY = "pageRefreshCount";
+const LAST_RESET_TIME_KEY = "lastResetTime";
+
+// Function to track and reset refresh count
+function trackPageRefreshWithReset() {
+  const now = Date.now(); // Current timestamp
+
+  // Retrieve the stored refresh count and last reset time
+  let refreshCount = parseInt(localStorage.getItem(REFRESH_COUNT_KEY)) || 0;
+  let lastResetTime =
+    parseInt(localStorage.getItem(LAST_RESET_TIME_KEY)) || now;
+
+  // Check if the reset duration has passed
+  if (now - lastResetTime >= RESET_DURATION) {
+    // Reset the count and update the last reset time
+    refreshCount = 0;
+    lastResetTime = now;
+    localStorage.setItem(LAST_RESET_TIME_KEY, lastResetTime);
+  }
+
+  // Increment the count and save it
+  refreshCount++;
+  localStorage.setItem(REFRESH_COUNT_KEY, refreshCount);
+
+  // Check if the refresh count exceeds the limit
+  if (refreshCount > MAX_REFRESHES) {
+    // Redirect to a different page or take any other action
+    window.location.href = "/gaf-market/limit-exceeded.php";
+  }
+}
+
+// Run the function when the page loads
+window.onload = trackPageRefreshWithReset;
+
