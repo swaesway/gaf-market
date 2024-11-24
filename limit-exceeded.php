@@ -18,7 +18,7 @@
                         <h1 class="card-title text-danger fw-bold mb-3">Limit Exceeded</h1>
                         <p class="card-text text-danger fs-5">
                             You have exceeded the maximum number of page refreshes allowed.
-                            Please wait and try again in the next 24 hours.
+                            Please wait and try again in the next 7 minutes.
                         </p>
                     </div>
                 </div>
