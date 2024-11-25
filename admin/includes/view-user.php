@@ -103,7 +103,7 @@ include('header.php');
                                         <span class="pill-size me-2 rounded-pill"><span class="status-indicator"></span>Active</span>
                                         <span class="pill-size rounded-pill">January 2024</span>
                                     </div>
-                                    <button class="btn btn-danger rounded-pill">Block</button>
+                                    <button class="btn btn-danger">Block</button>
                                 </div>
                             </div>
                         </div>
