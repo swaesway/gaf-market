@@ -7,7 +7,7 @@ if(isset($_GET['productid']) && $_GET['id'])
     $id = $_GET['id'];
 }
 
-$query = "SELECT * FROM productimgs Where id = ? ";
+$query = "SELECT * FROM productimgs WHERE id = ? ";
 $stmt = mysqli_prepare($conn, $query);
 mysqli_stmt_bind_param($stmt, "i", $id);
 $stmt->execute();
@@ -20,38 +20,102 @@ $title = $rows['title'];
 $category = $rows['category'];
 ?>
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+
 <title>Update Products - GAF-MARKET <?php echo $title?></title>
 <style>
     /* Container and Card Styles */
     .container-fluid {
-      padding: 20px;
+        padding: 20px;
     }
 
     .add-product-card {
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
+    /* Form field enhancements */
     .form-floating input,
     .form-floating textarea {
-      padding-left: 1.5rem;
+        padding-left: 1.5rem;
     }
 
     /* Preview image styling */
     #preview-container img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      margin: 5px;
-      border-radius: 5px;
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        margin: 5px;
+        border-radius: 5px;
     }
 
     .file-upload-btn {
-      font-size: 1.5rem;
-      cursor: pointer;
+        font-size: 1.5rem;
+        cursor: pointer;
     }
-  </style>
+
+    /* Adjust textarea height */
+    textarea#productDescription {
+        min-height: 100px; /* Ensure it displays at least 3 lines */
+        resize: vertical; /* Allow resizing only vertically */
+    }
+
+    /* Danger Zone Styling */
+    .danger-zone {
+        background-color: #fff;
+        border: 2px solid #dc3545; /* Red border */
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 15px; /* Reduced space between title and div */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .danger-zone .left {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .danger-zone .left p {
+        margin: 0;
+        color: #dc3545;
+    }
+
+    .danger-zone .right {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .danger-zone .btn-outline-danger {
+        border-color: #dc3545;
+        color: #dc3545;
+        font-weight: bold;
+    }
+
+    .danger-zone .btn-outline-danger:hover {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+    .form-floating input,
+    .form-floating textarea {
+        padding-left: 1.5rem;
+    }
+
+    /* For button container */
+    .danger-zone .right button {
+        width: 100%;
+    }
+
+    /* Updated title style */
+    .danger-zone-title {
+        margin-bottom: 10px;
+        color: #dc3545; /* Red color to match the div outline */
+    }
+</style>
 
 <main id="main" class="main">
   <div class="pagetitle">
@@ -72,19 +136,18 @@ $category = $rows['category'];
         <?php
         if(isset($_SESSION['error'])) {
           echo '<div class="alert alert-danger alert-dismissible mt-2 fade show" role="alert">
-                '.$_SESSION['error'].'
-                <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close"></button>
+                '.$_SESSION['error'].' 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
           unset($_SESSION['error']); 
       } 
       if(isset($_SESSION['success'])) {
           echo '<div class="alert alert-primary alert-dismissible mt-2 fade show" role="alert">
-                '.$_SESSION['success'].'
-                <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close"></button>
+                '.$_SESSION['success'].' 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
           unset($_SESSION['success']);
       }
-        
         ?>
           <h5 class="text-center mb-4">Product Update</h5>
           <form class="form-card" onsubmit="validateForm(event)" method="POST" action="updateproduct.php?productid=<?php echo $productid; ?>&id=<?php echo $id; ?>" enctype="multipart/form-data">
@@ -107,7 +170,7 @@ $category = $rows['category'];
             <div class="row justify-content-between text-left mb-4">
               <div class="form-floating col-12">
                 <select class="form-select" id="productCategory" name="ncategory"  required>
-                <option value="<?php echo $category ?>"><?php echo $category ?></option>
+                  <option value="<?php echo $category ?>"><?php echo $category ?></option>
                   <option value="Electronics">Electronics</option>
                   <option value="Footwear">Footwear</option>
                   <option value="Food Stuffs">Food Stuffs</option>
@@ -123,22 +186,11 @@ $category = $rows['category'];
             <!-- Product Description -->
             <div class="row justify-content-between text-left mb-4">
               <div class="form-floating col-12">
-                <textarea id="productDescription" name="ndescription" class="form-control" rows="20" cols="50"required><?php echo $product_description ?></textarea>
+                <textarea id="productDescription" name="ndescription" class="form-control" rows="5" required><?php echo $product_description ?></textarea>
                 <label for="productDescription">Description*</label>
                 <small id="descriptionError" class="text-danger"></small>
               </div>
             </div>
-
-            <!-- File Upload Button with Max 4 Images
-            <div class="form-group mb-4">
-              <h6 class="fw-bold mb-2">Add up to 4 photos for this category</h6>
-              <button type="button" class="btn btn-outline-success" onclick="triggerFileUpload()">
-                <i class="file-upload-btn">+</i>
-              </button>
-              <input type="file" required id="formFileLg" name="images[]" class="d-none" multiple onchange="displayFilePreviews()" accept="image/" />
-              <small id="fileError" class="text-danger"></small>
-              <div id="preview-container" class="mt-3 d-flex flex-wrap"></div>
-            </div> -->
 
             <!-- Submit Button -->
             <div class="row justify-content-center text-center">
@@ -148,9 +200,22 @@ $category = $rows['category'];
             </div>
           </form>
         </div>
+
+        <!-- Danger Zone -->
+        <h5 class="text-center mb-4 danger-zone-title">Danger Zone</h5>
+        <div class="danger-zone">
+          <div class="left">
+            <p><strong>Product: </strong><?php echo $title; ?></p>
+            <p><strong>Price: </strong>$<?php echo $price; ?></p>
+          </div>
+          <div class="right">
+            <form method="POST" action="deleteproduct.php?productid=<?php echo $productid; ?>&id=<?php echo $id; ?>">
+              <button type="submit" class="btn btn-outline-danger" name="deleteproductbtn">Delete Product</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
-
     </div>
   </section>
 </main><!-- End #main -->
@@ -159,36 +224,6 @@ $category = $rows['category'];
     // Trigger file upload dialog
     function triggerFileUpload() {
       document.getElementById('formFileLg').click();
-    }
-
-    // Display image previews and limit to 4 images
-    function displayFilePreviews() {
-      const fileInput = document.getElementById('formFileLg');
-      const previewContainer = document.getElementById('preview-container');
-      const fileError = document.getElementById('fileError');
-
-      previewContainer.innerHTML = ""; // Clear previous previews
-      fileError.textContent = ""; // Clear any previous error
-
-      // Check for a maximum of 4 files
-      if (fileInput.files.length > 4) {
-        fileError.textContent = "You can only upload up to 4 images.";
-        fileInput.value = ""; // Reset file input
-        return;
-      }
-
-      // Create image previews
-      Array.from(fileInput.files).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = function (event) {
-          const img = document.createElement('img');
-          img.src = event.target.result;
-          img.alt = file.name;
-          img.className = "img-thumbnail"; // Bootstrap styling
-          previewContainer.appendChild(img);
-        };
-        reader.readAsDataURL(file);
-      });
     }
 
     // Form validation
@@ -206,70 +241,33 @@ $category = $rows['category'];
 
       // Validate Product Price
       const productPrice = document.getElementById('productPrice').value.trim();
-      if (!productPrice || isNaN(productPrice) || parseFloat(productPrice) <= 0) {
-        document.getElementById('priceError').textContent = "Enter a valid price.";
+      if (!productPrice) {
+        document.getElementById('priceError').textContent = "Product price is required.";
         isValid = false;
       } else {
         document.getElementById('priceError').textContent = "";
       }
 
       // Validate Category
-      const productCategory = document.getElementById('productCategory').value;
-      if (productCategory === "") {
+      const category = document.getElementById('productCategory').value.trim();
+      if (!category) {
         document.getElementById('categoryError').textContent = "Please select a category.";
         isValid = false;
       } else {
         document.getElementById('categoryError').textContent = "";
       }
 
-      // Validate Product Description
-      const productDescription = document.getElementById('productDescription').value.trim();
-      if (!productDescription) {
-        document.getElementById('descriptionError').textContent = "Product Description is required.";
+      // Validate Description
+      const description = document.getElementById('productDescription').value.trim();
+      if (!description) {
+        document.getElementById('descriptionError').textContent = "Product description is required.";
         isValid = false;
       } else {
         document.getElementById('descriptionError').textContent = "";
       }
 
-      // Validate Image File Selection
-      const fileInput = document.getElementById('formFileLg');
-      if (fileInput.files.length === 0) {
-        document.getElementById('fileError').textContent = "Please upload at least one image.";
-        isValid = false;
-      } else if (fileInput.files.length > 4) {
-        document.getElementById('fileError').textContent = "You can only upload up to 4 images.";
-        isValid = false;
-      } else {
-        document.getElementById('fileError').textContent = "";
+      if (!isValid) {
+        event.preventDefault(); // Prevent form submission if validation fails
       }
-
-
     }
-  </script>
-
-<?php
-    if (isset($_POST['updateproductbtn'])) {
-        $newtitle = $_POST['ntitle'];
-        $newprice = $_POST['nprice'];
-        $newdescription = $_POST['ndescription'];
-        $newcategory = $_POST['ncategory'];
-    
-        $query = "UPDATE productimgs SET title = ?, price = ?, description = ?, category = ? WHERE productid = ?";
-        $stmt = mysqli_prepare($conn, $query);
-        mysqli_stmt_bind_param($stmt, 'sssss', $newtitle, $newprice, $newdescription, $newcategory, $productid);
-        $result = $stmt->execute();
-    
-        if ($result) {
-            $_SESSION['success'] = "Product updated successfully";
-        } else {
-            $_SESSION['error'] = "Error updating product";
-        }
-    
-        echo '<script>window.location.href="updateproduct.php?productid=' . $productid . '&id=' . $id . '";</script>';
-        exit();
-    
-        mysqli_stmt_close($stmt);
-    }
-    
-
-?>
+</script>
