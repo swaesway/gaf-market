@@ -54,8 +54,8 @@
     <div class="col-lg-15">
       <div class="row">
 
-         <!-- Users Card -->
-         <div class="col-xxl-4 col-xl-4">
+   <!-- Users Card -->
+   <div class="col-xxl-4 col-xl-4">
 
 <div class="card info-card customers-card">
 

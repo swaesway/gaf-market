@@ -6,12 +6,15 @@ include('header.php');
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
 <style>
     .imgprofile {
-        width: 100px;
-        height: 100px;
+        width: 80px; /* Reduced width */
+        height: 80px; /* Reduced height */
         border-radius: 50%;
         object-fit: cover;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         border: 2px solid #f2f2f2;
+    }
+    .card-equal-height {
+        height: 150px; /* Adjusted height for all cards */
     }
 </style>
 
@@ -25,7 +28,8 @@ include('header.php');
     <div class="row">
         <!-- Left Column -->
         <div class="col-lg-4">
-            <div class="card">
+            <!-- Profile Card -->
+            <div class="card card-equal-height">
                 <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                     <img src="../../uploads/cosmetics.jpeg" alt="Profile" class="imgprofile">
                     <h2>Kevin Anderson</h2>
@@ -33,73 +37,70 @@ include('header.php');
             </div>
 
             <!-- Product Statistics -->
-<div class="card">
-  <div class="filter">
-    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-      <li class="dropdown-header text-start">
-        <h6>Filter</h6>
-      </li>
-      <li><a class="dropdown-item" href="#">Today</a></li>
-      <li><a class="dropdown-item" href="#">This Month</a></li>
-      <li><a class="dropdown-item" href="#">This Year</a></li>
-    </ul>
-  </div>
-
-  <div class="card-body pb-0">
-    <h5 class="card-title">Product Statistics <span>| Today</span></h5>
-
-    <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        echarts.init(document.querySelector("#trafficChart")).setOption({
-          tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
-          },
-          legend: {
-            top: '5%',
-            left: 'center'
-          },
-          series: [{
-            name: 'Product Statistics',
-            type: 'pie',
-            radius: ['40%', '70%'],
-            avoidLabelOverlap: false,
-            label: {
-              show: false,
-              position: 'center'
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: '18',
-                fontWeight: 'bold'
-              }
-            },
-            labelLine: {
-              show: false
-            },
-            data: [
-              { value: 33, name: 'Callback Products', itemStyle: { color: '#fd7e14' } }, // Red
-              { value: 50, name: 'Bookmarked Items', itemStyle: { color: '#198754' } }, // Green
-              { value: 17, name: 'No Interactions', itemStyle: { color: '#0dcaf0' } }  // Blue
-            ]
-          }]
-        });
-      });
-    </script>
-  </div>
-</div><!-- End Product Statistics -->
-</div>
+            <div class="card">
+                <div class="filter">
+                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <li class="dropdown-header text-start">
+                            <h6>Filter</h6>
+                        </li>
+                        <li><a class="dropdown-item" href="#">Today</a></li>
+                        <li><a class="dropdown-item" href="#">This Month</a></li>
+                        <li><a class="dropdown-item" href="#">This Year</a></li>
+                    </ul>
+                </div>
+                <div class="card-body pb-0">
+                    <h5 class="card-title">Product Statistics <span>| Today</span></h5>
+                    <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                            echarts.init(document.querySelector("#trafficChart")).setOption({
+                                tooltip: {
+                                    trigger: 'item',
+                                    formatter: '{a} <br/>{b}: {c} ({d}%)'
+                                },
+                                legend: {
+                                    top: '5%',
+                                    left: 'center'
+                                },
+                                series: [{
+                                    name: 'Product Statistics',
+                                    type: 'pie',
+                                    radius: ['40%', '70%'],
+                                    avoidLabelOverlap: false,
+                                    label: {
+                                        show: false,
+                                        position: 'center'
+                                    },
+                                    emphasis: {
+                                        label: {
+                                            show: true,
+                                            fontSize: '18',
+                                            fontWeight: 'bold'
+                                        }
+                                    },
+                                    labelLine: {
+                                        show: false
+                                    },
+                                    data: [
+                                        { value: 33, name: 'Callback Products', itemStyle: { color: '#fd7e14' } },
+                                        { value: 50, name: 'Bookmarked Items', itemStyle: { color: '#198754' } },
+                                        { value: 17, name: 'No Interactions', itemStyle: { color: '#0dcaf0' } }
+                                    ]
+                                }]
+                            });
+                        });
+                    </script>
+                </div>
+            </div><!-- End Product Statistics -->
+        </div>
 
         <!-- Right Column -->
         <div class="col-lg-8">
             <div class="row">
                 <!-- Users Card -->
                 <div class="col-md-6">
-                    <div class="card info-card customers-card">
+                    <div class="card info-card customers-card card-equal-height">
                         <div class="filter">
                             <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -115,8 +116,7 @@ include('header.php');
                             <h5 class="card-title">Callbacks <span>| Manage</span></h5>
                             <div class="d-flex align-items-center">
                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                <i class="bi bi-arrow-repeat"></i>
-
+                                    <i class="bi bi-arrow-repeat"></i>
                                 </div>
                                 <div class="ps-3">
                                     <h6>33</h6>
@@ -130,7 +130,7 @@ include('header.php');
 
                 <!-- Products Card -->
                 <div class="col-md-6">
-                    <div class="card info-card sales-card">
+                    <div class="card info-card sales-card card-equal-height">
                         <div class="filter">
                             <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -157,6 +157,7 @@ include('header.php');
                         </div>
                     </div>
                 </div><!-- End Products Card -->
+
                  <!-- Top Selling -->
             <div class="col-12">
               <div class="card top-selling overflow-auto">
@@ -237,13 +238,7 @@ include('header.php');
                         <td class="fw-bold">63</td>
                         <td>$2,016</td>
                       </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="../../uploads/cosmetics.jpeg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">Sit unde debitis delectus repellendus</a></td>
-                        <td>$79</td>
-                        <td class="fw-bold">41</td>
-                        <td>$3,239</td>
-                      </tr>
+                      
                     </tbody>
                   </table>
 
@@ -251,6 +246,7 @@ include('header.php');
 
               </div>
             </div><!-- End Top Selling -->
+
             </div>
         </div>
     </div>
