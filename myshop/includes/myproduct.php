@@ -72,6 +72,22 @@ include('header.php');
         .card-link {
             display: block;
         }
+        .footer-text {
+            font-size: 13px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 4px; /* Reduce distance */
+        }
+
+        .freeze-btn {
+            font-size: 12px;
+            padding: 3px 6px; /* Smaller padding for reduced size */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            float: right; /* Align to the right */
+        }
+
     </style>
 </head>
 
@@ -109,7 +125,10 @@ include('header.php');
                         <div class='card-footer'>
                          <p class='footer-text ms-2'>" . $value['title'] . "</p>
                          <p class='footer-text ms-2'>GHC  " . $value['price'] . "</p>
-                        </div>
+                         <button type='button' class='btn btn-primary btn-sm freeze-btn' data-bs-toggle='tooltip' data-bs-placement='top' title='Use this button to freeze this product.'>
+                                        <i class='bi bi-lock-fill me-1'></i> Freeze
+                                    </button>
+                         </div>
                     </div>
                     </a>
                             </div>
@@ -123,7 +142,15 @@ include('header.php');
         </section>
     </main>
 
-
+    <script>
+        // Initialize Bootstrap tooltips
+        document.addEventListener('DOMContentLoaded', function () {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+    </script>
 </body>
 
 </html>
