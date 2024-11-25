@@ -34,6 +34,18 @@ session_start();
   <!--  Main CSS File -->
   <link href="../../assets/css/style.css" rel="stylesheet">
 
+  <style>
+       body{
+      background-image: url('../../uploads/gafbg.jpg'), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+      background-repeat: repeat; /* Repeats the image in both directions */
+      background-size: 400px; /* Keeps the image's original size */
+      background-position: top left;
+    }
+    img{
+      max-width: 15%;
+    }
+  </style>
+
 </head>
 
 <body>
@@ -63,13 +75,13 @@ session_start();
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
           <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+            <div class="col-lg-6 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
-              <div class="d-flex justify-content-center py-4">
-                <a href="index.html" class="logo d-flex align-items-center w-auto">
-                <img src="../../uploads/logo.png" alt="" style="size: 100px;">
-                  <span class="d-none d-lg-block">GAF-Market</span>
-                </a>
+              <div class="d-flex justify-content-center">
+               
+              <div class="d-flex justify-content-center py-4 text-center">
+                  <span class="d-none d-lg-block text-white" style="font-weight: bolder; "><img src="../../uploads/logo.png" alt=""> <span><h4>GAF-MARKET</h4></span></span>
+              </div><!-- End Logo -->
               </div><!-- End Logo -->
 
               <div class="card mb-3">

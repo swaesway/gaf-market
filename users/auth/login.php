@@ -46,9 +46,13 @@ if (isset($_SESSION['user'])) {
   
   <style>
     body{
-      background-image: url('../../uploads/gafbg.jpg');
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
+      background-image: url('../../uploads/gafbg.jpg'), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+      background-repeat: repeat; /* Repeats the image in both directions */
+      background-size: 400px; /* Keeps the image's original size */
+      background-position: top left;
+    }
+    img{
+      max-width: 15%;
     }
   </style>
 </head>
@@ -73,13 +77,10 @@ if (isset($_SESSION['user'])) {
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
           <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+            <div class="col-lg-5 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
-              <div class="d-flex justify-content-center py-4">
-                <a href="#" class="logo d-flex align-items-center w-auto">
-                  <img src="../../uploads/logo.png" alt="" style="size: 100px;">
-                  <span class="d-none d-lg-block"><small>GAF-Market</small></span>
-                </a>
+              <div class="d-flex justify-content-center py-4 text-center">
+                  <span class="d-none d-lg-block text-white" style="font-weight: bolder; "><img src="../../uploads/logo.png" alt=""> <span><h4>GAF-MARKET</h4></span></span>
               </div><!-- End Logo -->
 
               <div class="card mb-3">
