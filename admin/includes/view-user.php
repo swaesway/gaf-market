@@ -24,41 +24,50 @@ include('header.php');
 
 <style>
     .profile-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .rounded-image {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        overflow: hidden;
-        margin-bottom: 15px;
+        max-width: 250px;
+        margin: 0 auto;
     }
 
     .profile-img {
-        width: 100%;
-        height: auto;
-        /* Maintain aspect ratio */
+        width: 100px;
+        height: 100px;
         object-fit: cover;
-        /* Ensures the image covers the div */
+        border: 3px solid #f8f9fa;
     }
 
-    .user-info {
-        text-align: left;
+    .user-name {
+        font-weight: bold;
+        font-size: 1.2rem;
     }
 
-    label {
+    .user-email {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+
+
+    .pill-size {
+        position: relative;
+        background-color: #ECE6E6;
+        padding: 8px 10px;
+        font-size: 8px;
+        font-weight: 700;
+    }
+
+    .btn-danger {
+        width: 100%;
+        font-size: 1rem;
         font-weight: 800;
     }
 
-    label .status {
-        color: white;
-        font-weight: 600;
-        padding: 0.4rem;
-        border-radius: 0.5rem;
-        background-color: green;
+    .status-container .status-indicator {
+        width: 10px;
+        height: 10px;
+        background-color: #28a745;
+        border-radius: 50%;
+        margin-right: 8px;
+        margin-bottom: -2px;
+        display: inline-block;
     }
 </style>
 
@@ -79,30 +88,30 @@ include('header.php');
         </div>
 
         <section class="section">
-            <div class="row">
-                <div class="col-lg-12">
+            <div class="row justify-content-start">
+                <div class="col-lg-4">
                     <div class="card">
-                        <div class="card-body">
-                            <div class="profile-container text-center pt-5">
-                                <div class="rounded-image">
-                                    <img src="../../assets/img/avatar.png" alt="User Avatar" class="profile-img" />
+                        <div class="card-body text-center">
+                            <div class="profile-container pt-3">
+                                <div class="rounded-image mb-3">
+                                    <img src="../../assets/img/avatar.png" alt="User Avatar" class="profile-img rounded-circle" />
                                 </div>
-                                <div class="user-info d-flex flex-column justify-content-start">
-                                    <label>Username: <span>JohnDoe</span> </label><br>
-                                    <label>Email: <span>johndoe@example.com</span> </label><br>
-                                    <label>Status: <span class="status">Active</span></label><br>
-                                    <label>Joined: <span>January 2020</span></label><br>
-                                    <button class="btn btn-danger mt-3">Block</button>
+                                <div>
+                                    <h4 class="user-name mb-1">John Doe</h4>
+                                    <p class="user-email text-muted mb-2">email@example.com</p>
+                                    <div class="status-container mb-3">
+                                        <span class="pill-size me-2 rounded-pill"><span class="status-indicator"></span>Active</span>
+                                        <span class="pill-size rounded-pill">January 2024</span>
+                                    </div>
+                                    <button class="btn btn-danger rounded-pill">Block</button>
                                 </div>
                             </div>
-
-
                         </div>
-
                     </div>
                 </div>
             </div>
         </section>
+
 
         <section class="section">
             <div class="row">
@@ -110,7 +119,7 @@ include('header.php');
                     <div class="card">
                         <div class="card-body">
                             <table class="table datatable mt-5" id="productsTable">
-                                <h3 class="mt-5">Product Uploaded by User</h3>
+                                <h3 class="mt-5">Products</h3>
                                 <thead>
                                     <tr>
                                         <th scope="col">Product ID</th>
