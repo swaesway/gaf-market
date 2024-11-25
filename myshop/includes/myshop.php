@@ -236,7 +236,7 @@ include('header.php');
                         <td><a href="#" class="text-primary fw-bold">Officiis quaerat sint rerum error</a></td>
                         <td>$32</td>
                         <td class="fw-bold">63</td>
-                        <td>$2,016</td>
+                        <td>$2,116</td>
                       </tr>
                       
                     </tbody>
