@@ -369,12 +369,6 @@ function trackPageRefreshWithReset() {
         localStorage.setItem(REFRESH_COUNT_KEY, refreshCount); // Reset count in storage
     }
 
-    // Check if the user exceeded the refresh limit
-    if (refreshCount > MAX_REFRESHES) {
-        // Redirect to a different page
-        window.location.href = "/gaf-market/limit-exceeded.php";
-    }
-
     // Check if the navigation is a true page reload
     const navigationType = performance.getEntriesByType("navigation")[0]?.type || "navigate";
 
@@ -382,6 +376,12 @@ function trackPageRefreshWithReset() {
         // Increment the count and save it
         refreshCount++;
         localStorage.setItem(REFRESH_COUNT_KEY, refreshCount);
+    }
+
+    // Check if the user exceeded the refresh limit
+    if (refreshCount > MAX_REFRESHES) {
+        // Redirect to a different page
+        window.location.href = "/gaf-market/limit-exceeded.php";
     }
 }
 
