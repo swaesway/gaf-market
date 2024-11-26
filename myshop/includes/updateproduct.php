@@ -20,45 +20,42 @@ $title = $rows['title'];
 $category = $rows['category'];
 ?>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
-
 <title>Update Products - GAF-MARKET <?php echo $title?></title>
 <style>
     /* Container and Card Styles */
     .container-fluid {
-        padding: 20px;
+      padding: 20px;
     }
 
     .add-product-card {
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    /* Form field enhancements */
     .form-floating input,
     .form-floating textarea {
-        padding-left: 1.5rem;
+      padding-left: 1.5rem;
     }
 
     /* Preview image styling */
     #preview-container img {
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        margin: 5px;
-        border-radius: 5px;
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      margin: 5px;
+      border-radius: 5px;
     }
 
     .file-upload-btn {
-        font-size: 1.5rem;
-        cursor: pointer;
+      font-size: 1.5rem;
+      cursor: pointer;
     }
 
     /* Adjust textarea height */
     textarea#productDescription {
-        min-height: 100px; /* Ensure it displays at least 3 lines */
-        resize: vertical; /* Allow resizing only vertically */
+      min-height: 100px; /* Ensure it displays at least 3 lines */
+      resize: vertical; /* Allow resizing only vertically */
     }
 
     /* Danger Zone Styling */
@@ -115,6 +112,7 @@ $category = $rows['category'];
         margin-bottom: 10px;
         color: #dc3545; /* Red color to match the div outline */
     }
+
 </style>
 
 <main id="main" class="main">
@@ -136,14 +134,14 @@ $category = $rows['category'];
         <?php
         if(isset($_SESSION['error'])) {
           echo '<div class="alert alert-danger alert-dismissible mt-2 fade show" role="alert">
-                '.$_SESSION['error'].' 
+                '.$_SESSION['error'].'
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
           unset($_SESSION['error']); 
       } 
       if(isset($_SESSION['success'])) {
           echo '<div class="alert alert-primary alert-dismissible mt-2 fade show" role="alert">
-                '.$_SESSION['success'].' 
+                '.$_SESSION['success'].'
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
           unset($_SESSION['success']);
@@ -200,8 +198,6 @@ $category = $rows['category'];
             </div>
           </form>
         </div>
-
-        <!-- Danger Zone -->
         <h5 class="text-center mb-4 danger-zone-title">Danger Zone</h5>
         <div class="danger-zone">
           <div class="left">
@@ -216,8 +212,10 @@ $category = $rows['category'];
         </div>
       </div>
     </div>
+
     </div>
   </section>
+  
 </main><!-- End #main -->
 
 <script>
@@ -241,26 +239,26 @@ $category = $rows['category'];
 
       // Validate Product Price
       const productPrice = document.getElementById('productPrice').value.trim();
-      if (!productPrice) {
-        document.getElementById('priceError').textContent = "Product price is required.";
+      if (!productPrice || isNaN(productPrice) || parseFloat(productPrice) <= 0) {
+        document.getElementById('priceError').textContent = "Enter a valid price.";
         isValid = false;
       } else {
         document.getElementById('priceError').textContent = "";
       }
 
       // Validate Category
-      const category = document.getElementById('productCategory').value.trim();
-      if (!category) {
+      const productCategory = document.getElementById('productCategory').value;
+      if (productCategory === "") {
         document.getElementById('categoryError').textContent = "Please select a category.";
         isValid = false;
       } else {
         document.getElementById('categoryError').textContent = "";
       }
 
-      // Validate Description
-      const description = document.getElementById('productDescription').value.trim();
-      if (!description) {
-        document.getElementById('descriptionError').textContent = "Product description is required.";
+      // Validate Product Description
+      const productDescription = document.getElementById('productDescription').value.trim();
+      if (!productDescription) {
+        document.getElementById('descriptionError').textContent = "Product Description is required.";
         isValid = false;
       } else {
         document.getElementById('descriptionError').textContent = "";
@@ -271,3 +269,28 @@ $category = $rows['category'];
       }
     }
 </script>
+
+<?php
+if (isset($_POST['updateproductbtn'])) {
+    $newtitle = $_POST['ntitle'];
+    $newprice = $_POST['nprice'];
+    $newdescription = $_POST['ndescription'];
+    $newcategory = $_POST['ncategory'];
+
+    $query = "UPDATE productimgs SET title = ?, price = ?, description = ?, category = ? WHERE productid = ?";
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, 'sssss', $newtitle, $newprice, $newdescription, $newcategory, $productid);
+    $result = $stmt->execute();
+
+    if ($result) {
+        $_SESSION['success'] = "Product updated successfully";
+    } else {
+        $_SESSION['error'] = "Error updating product";
+    }
+
+    echo '<script>window.location.href="updateproduct.php?productid=' . $productid . '&id=' . $id . '";</script>';
+    exit();
+
+    mysqli_stmt_close($stmt);
+}
+?>
