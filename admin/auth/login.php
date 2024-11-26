@@ -37,46 +37,54 @@ session_start();
   <!--  Main CSS File -->
   <link href="../../assets/css/style.css" rel="stylesheet">
 
+  <style>
+    body{
+      background-image: url('../../uploads/gafbg.jpg'), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+      background-repeat: repeat; /* Repeats the image in both directions */
+      background-size: 400px; /* Keeps the image's original size */
+      background-position: top left;
+    }
+    img{
+      max-width: 15%;
+    }
+  </style>
+
 </head>
 
 <body>
 
   <main>
     <div class="container">
-
-    <?php 
-    
-//     if(isset( $_SESSION['login_error'])) {
-//       echo '<div class="alert alert-danger alert-dismissible mt-2 fade show" role="alert">
-//             '. $_SESSION['login_error'].'
-//             <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close"></button>
-//             </div>';
-//       unset( $_SESSION['login_error']); 
-//   }
-    
-    ?>
-
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+        <?php 
+                  
+                  if(isset( $_SESSION['login_error'])) {
+                    echo '<div class="alert alert-danger alert-dismissible mt-2 fade show" role="alert">
+                          '. $_SESSION['login_error'].'
+                          <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close"></button>
+                          </div>';
+                    unset( $_SESSION['login_error']); 
+                }
 
-              <div class="d-flex justify-content-center py-4">
-                <a href="index.html" class="logo d-flex align-items-center w-auto">
-                  <span class="d-none d-lg-block" style="color: #0a2d02;"><h4 class="fw-bold">GAF Market - Admin Portal</h4></span>
-                </a>
-              </div><!-- End Logo -->
+                  
+                  ?>
+          <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+            <div class="d-flex justify-content-center py-4 text-center">
+                  <span class="d-none d-lg-block text-white" style="font-weight: bolder; "><img src="../../uploads/logo.png" alt=""> <span><h4>GAF-MARKET</h4></span></span>
+              </div>
 
               <div class="card mb-3">
-
                 <div class="card-body">
 
                   <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4" style="color: #0a2d02;">Login to Your Account</h5>
+                    <h5 class="card-title text-center pb-0 fs-4" style="color: #0a2d02;">Admin-Portal</h5>
                     <p class="text-center small">Enter your email & password to login</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" novalidate action="../database-Queries.php" method="post">
+                  <form class="row g-3 needs-validation" novalidate action="../../db/dbquerries.php" method="post">
 
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Email</label>
@@ -85,14 +93,14 @@ session_start();
                         <div class="invalid-feedback">Please enter your Email.</div>
                       </div>
                     </div>
-
+ 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
                       <input type="password" name="password" class="form-control" id="yourPassword" required  value="<?php if(isset($_SESSION['password'])) echo $_SESSION['password'] ?>">
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
                     <div class="col-12">
-                      <button class="btn btn-success w-100" type="submit" name="loginbtn">Login</button>
+                      <button class="btn btn-success w-100" type="submit" name="loginadminbtn">Autenticate</button>
                     </div>
                     <div class="col-12">
                     </div>

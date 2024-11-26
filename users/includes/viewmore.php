@@ -286,11 +286,11 @@ $date = (new DateTime($time))->format('Y-m-d')
       </div>
         
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <form action="viewmore.php?productid=<?php echo $productid ?>&sellerid=<?php echo $sellerid ?>&id=<?php echo $id?>" method="POST">
-        <button type="submit" class="btn btn-danger text-white" name="report">Send Report</button>
+            <Textarea class="mt-1 form-control mb-2" rows="6" name="description" cols="55" placeholder="Describe your report" required></Textarea>
+        <button type="submit" class="btn btn-danger text-white" style="float: right;" name="report">Send Report</button>
         </form>
-      </div>
+      </div> 
     </div>
   </div>
 </div>
@@ -344,9 +344,10 @@ $date = (new DateTime($time))->format('Y-m-d')
 <?php
 if(isset($_POST['report']))
 {
-    $query = "INSERT INTO reports(userid, productid) VALUES(?,?)";
+    $description = $_POST['description'];
+    $query = "INSERT INTO reports(userid, productid, reportdescription) VALUES(?,?,?)";
     $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "is", $sellerid, $productid);
+    mysqli_stmt_bind_param($stmt, "iss", $sellerid, $productid, $description);
     $result = $stmt->execute();
 
     if ($result) {
@@ -360,6 +361,7 @@ if(isset($_POST['report']))
         exit();
     
     mysqli_stmt_close($stmt);
+
 }
 
 if(isset($_POST['request']))

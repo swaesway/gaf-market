@@ -1,5 +1,17 @@
 <?php
-include('header.php');   
+include('../../db/db.php');
+include('header.php'); 
+
+$usersquery = 'SELECT * FROM users';
+$stmt1 = mysqli_prepare($conn, $usersquery);
+$stmt1->execute();
+$countresult = $stmt1->get_result(); 
+if($countresult)
+{
+  $usercount = mysqli_num_rows($countresult);
+}
+mysqli_stmt_close($stmt1);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,9 +64,9 @@ include('header.php');
               <!-- User Table -->
               <table class="table datatable" id="userTable">
                 <thead>
-                  <tr>
+                  <tr> 
                     <th scope="col">#</th>
-                    <th scope="col">Username</th>
+                    <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Telephone</th>
                     <th scope="col">Status</th>
@@ -62,25 +74,33 @@ include('header.php');
                   </tr>
                 </thead>
                 <tbody>
-                  <?php
-                  $users = [
-                    ['id' => 1, 'username' => 'johndoe', 'email' => 'johndoe@example.com', 'telephone' => '123-456-7890', 'status' => 'Active'],
-                    ['id' => 2, 'username' => 'janedoe', 'email' => 'janedoe@example.com', 'telephone' => '123-456-7891', 'status' => 'Suspended'],
-                    ['id' => 3, 'username' => 'alexsmith', 'email' => 'alexsmith@example.com', 'telephone' => '123-456-7892', 'status' => 'Active']
-                ];
-                
-                  foreach ($users as $user) {
-                    echo "<tr>
-                            <th scope='row'>{$user['id']}</th>
-                            <td>{$user['username']}</td>
-                            <td>{$user['email']}</td>
-                            <td>{$user['telephone']}</td>
-                            <td><span class='badge bg-" . ($user['status'] == 'Active' ? 'success' : 'danger') . "'>{$user['status']}</span></td>
-                            <td>
-                              <a href='view-user.php' class='d-flex justify-content-center'><i class='bi bi-eye'></i></a>
-                            </td>
-                          </tr>";
+                <?php
+                  if ($usercount) {
+                    # code...
+                    $id=0;
+                    while ($row = mysqli_fetch_assoc($countresult) ) {
+                      $id++;
+                      $statusText = $row['status'] == 1 ? 'blocked' : 'not blocked';
+                       $statusBadge = $row['status'] == 1 ? 'danger' : 'success';
+                      echo "<tr>
+                              <th scope='row'>{$id}</th>
+                              <td>{$row['name']}</td>
+                              <td>{$row['email']}</td>
+                               <td>{$row['telephone']}</td>
+                              <td>
+                    <span class='badge bg-{$statusBadge}'>
+                        {$statusText}
+                    </span>
+                </td>
+                              <td>
+                                <a href='view-user.php?id=".$row['id']."' class='d-flex justify-content-center'><i class='bi bi-eye'></i></a>
+                              </td>
+                            </tr>";
+                    }
+
                   }
+                  
+                 
                   ?>
                 </tbody>
               </table>

@@ -286,7 +286,7 @@ $date = (new DateTime($time))->format('Y-m-d')
             <Textarea class="mt-1 form-control mb-2" rows="6" name="description" cols="55" placeholder="Describe your report" required></Textarea>
         <button type="submit" class="btn btn-danger text-white" style="float: right;" name="report">Send Report</button>
         </form>
-      </div>
+      </div> 
     </div>
   </div>
 </div>
@@ -298,7 +298,7 @@ $date = (new DateTime($time))->format('Y-m-d')
 if(isset($_POST['report']))
 {
     $description = $_POST['description'];
-    $query = "INSERT INTO reports(userid, productid, description) VALUES(?,?,?)";
+    $query = "INSERT INTO reports(userid, productid, reportdescription) VALUES(?,?,?)";
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, "iss", $sellerid, $productid, $description);
     $result = $stmt->execute();

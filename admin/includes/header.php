@@ -1,4 +1,11 @@
 <?php 
+session_start();
+
+if(isset($_SESSION['admin']) != 'true')
+{
+  echo "<script>window.location.href='../auth/login.php'</script>";
+}
+
 
 
 ?>
@@ -58,10 +65,6 @@
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
         <li class="nav-item dropdown">
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-bookmark text-white"></i>
-            <span class="badge bg-primary badge-number"></span>
-          </a><!-- End Notification Icon -->
 <!-- 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
@@ -207,24 +210,17 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6></h6>
-              <span>John Doe</span>
+              <span><?php if (isset($_SESSION['name'])) echo $_SESSION['name']?></span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                <i class="bi bi-person"></i>
-                <span>My Profile</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="account.php">
                 <i class="bi bi-gear"></i>
                 <span>Account Settings</span>
               </a>
@@ -232,19 +228,8 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
-                <i class="bi bi-question-circle"></i>
-                <span>Need Help?</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="Dashboard.php?action=signout">
+              <a class="dropdown-item d-flex align-items-center" href="Dashboard.php?action=logout">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -280,75 +265,15 @@
   <!-- End Sidebar-->
 
 
-<!-- Price Filter Modal -->
-<div class="modal fade" id="priceFilterModal" tabindex="-1" aria-labelledby="priceFilterModalLabel" aria-hidden="true">
-   <div class="modal-dialog">
-      <div class="modal-content">
-         <div class="modal-header">
-            <h5 class="modal-title" id="priceFilterModalLabel">Filter by Price</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-         </div>
-         <div class="modal-body">
-            <form>
-               <div class="mb-3">
-                  <label for="minPrice" class="form-label">Minimum Price</label>
-                  <input type="number" class="form-control" id="minPrice" placeholder="Enter minimum price">
-               </div>
-               <div class="mb-3">
-                  <label for="maxPrice" class="form-label">Maximum Price</label>
-                  <input type="number" class="form-control" id="maxPrice" placeholder="Enter maximum price">
-               </div>
-               <button type="submit" class="btn btn-primary" >Apply Filter</button>
-            </form>
-         </div>
-      </div>
-   </div>
-</div>
-
-<!-- Category Filter Modal -->
-<!-- Category Filter Modal with Radio Options -->
-<div class="modal fade" id="categoryFilterModal" tabindex="-1" aria-labelledby="categoryFilterModalLabel" aria-hidden="true">
-   <div class="modal-dialog">
-      <div class="modal-content">
-         <div class="modal-header">
-            <h5 class="modal-title" id="categoryFilterModalLabel">Filter by Categories</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-         </div>
-         <div class="modal-body">
-            <form>
-               <p>Select Categories:</p>
-               <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="electronics" name="category" value="electronics">
-                  <label class="form-check-label" for="electronics">Electronics</label>
-               </div>
-               <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="footwear" name="category" value="footwear">
-                  <label class="form-check-label" for="footwear">Footwear</label>
-               </div>
-               <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="food-stuffs" name="category" value="food-stuffs">
-                  <label class="form-check-label" for="food-stuffs">Food Stuffs</label>
-               </div>
-               <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="clothing" name="category" value="clothing">
-                  <label class="form-check-label" for="clothing">Clothing</label>
-               </div>
-               <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="grocery" name="category" value="grocery">
-                  <label class="form-check-label" for="grocery">Grocery</label>
-               </div>
-               <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="home-appliances" name="category" value="home-appliances">
-                  <label class="form-check-label" for="home-appliances">Home Appliances</label>
-               </div>
-               <button type="submit" class="btn btn-primary mt-3">Apply Filter</button>
-            </form>
-         </div>
-      </div>
-   </div>
-</div>
 
 
   <?php
 include('footer.php');
+
+if (isset($_GET['action'])) {
+  if ($_GET['action'] == 'logout') {
+    session_destroy();
+    echo "<script>window.location.href='../auth/login.php'</script>";
+  }
+}
   ?>

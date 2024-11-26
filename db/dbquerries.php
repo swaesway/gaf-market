@@ -2,14 +2,16 @@
 session_start();
 include('../db/db.php');
 
+$adminId = "";
+
 //user registration query 
 if(isset($_POST['registerAccountBtnUser']))
 {
 
-    $name =  $_POST['name'];
-    $email = $_POST['email'];
-    $tel = $_POST['tel'];
-    $password = md5($_POST['password']);
+    $name =  mysqli_real_escape_string($conn, $_POST['name']);
+    $email = mysqli_escape_string($conn, $_POST['email']);
+    $tel = mysqli_escape_string($conn, $_POST['tel']);
+    $password = mysqli_escape_string($conn, md5($_POST['password']));
 
     $query = "INSERT INTO users(name, email, telephone, password) VALUES(?,?,?,?)";
     $stmt =  mysqli_prepare($conn, $query);
@@ -34,8 +36,8 @@ if(isset($_POST['registerAccountBtnUser']))
 
 if(isset($_POST['loginbtnuser']))
 {
-    $email = $_POST['email'];
-    $password = md5($_POST['password']);
+    $email = mysqli_escape_string($conn,  $_POST['email']);
+    $password = mysqli_escape_string($conn, md5($_POST['password']));
 
     $query = "SELECT * FROM users WHERE email = '$email' AND password = '$password' LIMIT 1";
     $result = mysqli_query($conn, $query);
@@ -112,8 +114,103 @@ if (isset($_POST['productuploadbtn'])) {
 
 }
 
+//admin login
+
+if (isset($_POST['loginadminbtn'])) {
+    # code...
+    $email = mysqli_escape_string($conn,  $_POST['email']);
+    $password = mysqli_escape_string($conn, md5($_POST['password']));
+
+    $query = "SELECT * FROM admin WHERE email = '$email' AND password = '$password' LIMIT 1";
+    $result = mysqli_query($conn, $query);
+    if(!$result)
+    {
+        $_SESSION['login_error'] = "An error occured while loggin in" . mysqli_error($conn) ;
+    }
+    else{
+        if(mysqli_num_rows($result) == 1)
+        {
+           $_SESSION['admin'] = 'true';
+            while($rows = mysqli_fetch_assoc($result)){ 
+                $_SESSION['name']= $rows['name']; 
+                $_SESSION['email'] = $rows['email'];
+                $_SESSION['userId'] = $rows['id'];
+                if ($rows['changed'] == 0) {
+                    # code...
+                    //check if user has chanegd profile details
+                    $_SESSION['changed'] = $rows['changed'];
+                    $_SESSION['success'] = "Kindly update detail and continue";
+                    echo "<script>window.location.href='../admin/includes/account.php'</script>";
+                }
+                else{
+                    echo "<script>window.location.href='../admin/includes/dashboard.php'</script>";
+                }
+               
+            }
+
+            exit();
+        }
+        else{
+            $_SESSION['login_error'] = "Invalid credentials";
+            echo "<script>window.location.href='../admin/auth/login.php'</script>";
+            exit();
+        }
+    }
+    mysqli_stmt_close($stmt);
+
+}
 
 
+if(isset($_POST['adminupdatebtn']))
+{
+    $name = mysqli_escape_string($conn, $_POST['name']);
+    $email = mysqli_escape_string($conn,$_POST['email']);
+    $currentpass = mysqli_escape_string($conn, md5($_POST['currentpass']));
+    $newpass = mysqli_escape_string($conn, md5($_POST['newpass']));
+    $confirmpass = mysqli_escape_string($conn,  md5($_POST['confirmpass']));
+    $adminId =  $_SESSION['userId'];
+    $changed = 1;
+    
+    $query = "SELECT * FROM admin WHERE id ='$adminId'";
+    $result = mysqli_query($conn, $query);
+    if(!$result)
+    {
+        echo "An error occured while loggin in" . mysqli_error($conn) ;
+    }
+    else{
+        while( $rows = mysqli_fetch_assoc($result))
+        {
+                $oldpass = $rows['password'];
+        }
+        if($currentpass == $oldpass)
+        {
+            if($newpass == $confirmpass)
+            {
+                $query = "UPDATE admin SET email=?, name=?, password=?, changed=? WHERE id='$adminId'";
+                $stmt = mysqli_prepare($conn, $query);
+                mysqli_stmt_bind_param($stmt,'sssi',$email, $name, $confirmpass, $changed);
+                $result = $stmt->execute();
+                if($result)
+                {
+                     
+                     echo "<script>window.location.href='../admin/includes/account.php'</script>";
+                     session_destroy();
+                }
+            }
+            else{
+                $_SESSION['confirmpass'] = "Confirm password does not match new password"; 
+                echo "<script>window.location.href='../admin/includes/account.php'</script>";  
+                
+            }
+            
+        }
+        else{
+            $_SESSION['oldpasserror'] = "Password does not match current password"; 
+            echo "<script>window.location.href='../admin/includes/account.php'</script>";     
+        }
+    }
 
+    mysqli_close($conn);
+}
 ?>
 

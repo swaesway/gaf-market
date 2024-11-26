@@ -5,7 +5,7 @@
     $usersquery = 'SELECT * FROM users';
     $stmt1 = mysqli_prepare($conn, $usersquery);
     $stmt1->execute();
-    $countresult = $stmt1->get_result();
+    $countresult = $stmt1->get_result(); 
     if($countresult)
     {
       $usercount = mysqli_num_rows($countresult);
@@ -187,7 +187,7 @@ if ($reportresult) {
 
     // Query to join reports and users based on userid
     $reportsqueryjoined = "
-        SELECT r.id AS report_id, r.userid,r.timestamp, r.productid, r.description, r.resolved AS status, u.name AS username
+        SELECT r.id AS report_id, r.userid,r.timestamp, r.productid, r.reportdescription, r.resolved AS status, u.name AS username
         FROM reports r 
         JOIN users u ON r.userid = u.id ORDER BY r.timestamp DESC LIMIT 5 
     ";
@@ -208,7 +208,7 @@ if ($reportresult) {
         echo "
             <tr>
                 <th scope='row'>{$id}</th>
-                <td>{$rows['description']}</td>
+                <td>{$rows['reportdescription']}</td>
                 <td>{$rows['username']}</td>
                 <td>
                     <span class='badge bg-{$statusBadge}'>
@@ -217,7 +217,7 @@ if ($reportresult) {
                 </td>
                  <td>{$rows['timestamp']}</td>
                 <td>
-                    <a href='view-report.php?productid={$rows['productid']}&reportid={$rows['report_id']}' class='d-flex justify-content-center'>
+                   <a href='view-report.php?userid={$rows['userid']}&productid={$rows['productid']}&reportid={$rows['report_id']}' class='d-flex justify-content-center'>
                         <i class='bi bi-eye'></i>
                     </a>
                 </td>
@@ -281,7 +281,7 @@ if ($reportresult) {
                     </span>
                 </td>
                               <td>
-                                <a href='view-user.php' class='d-flex justify-content-center'><i class='bi bi-eye'></i></a>
+                                <a href='view-user.php?id=".$row['id']."' class='d-flex justify-content-center'><i class='bi bi-eye'></i></a>
                               </td>
                             </tr>";
                     }

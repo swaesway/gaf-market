@@ -2,9 +2,10 @@
 include('../../db/db.php');
 include('header.php');
 
-if(isset($_GET['id']))
+if(isset($_GET['userid']))
 {
-    $user_id = $_GET['id'];
+    $user_id = $_GET['userid'];
+    $report_id = $_GET['reportid'];
 }
 
 
@@ -113,9 +114,9 @@ $formatedDate = $Date->format('M-y')
             <h1>User</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="admin.php">Home</a></li>
-                    <li class="breadcrumb-item active">Manage Users</li>
-                    <li class="breadcrumb-item active">User</li>
+                    <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
+                    <li class="breadcrumb-item active">Reports</li>
+                    <li class="breadcrumb-item active">Account</li>
                     <li class="breadcrumb-item active"><?php echo $name ?></li>
                 </ol>
             </nav>
@@ -154,21 +155,9 @@ $formatedDate = $Date->format('M-y')
                                         ?>
                                         <span class="pill-size rounded-pill"><?php echo $formatedDate ?></span>
                                     </div>
-                                    <?php 
-                                    if($status == 1)
-                                    {
-                                        echo '
-                                             <button class="btn btn-sm text-white" style="background-color: #17B169; width:65%">Unblock Account</button>
-                                        ';
-                                    }
-                                    else
-                                    {
-                                        echo '
-                                        <button class="btn btn-sm text-white" style="background-color: red; width:65%">Block Account</button>
-                                   ';
-                                    }
-
-                                    ?>
+                                        <a href="view-user.php?id=<?php echo $user_id ?>">
+                                        <button class="btn btn-sm text-white" style="background-color: #17B169; width:65%">Go to Account</button>
+                                        </a>
                                 </div>
                             </div>
                         </div>
@@ -183,36 +172,31 @@ $formatedDate = $Date->format('M-y')
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <table class="table datatable mt-5" id="productsTable">
-                                <h3 class="mt-5">Products</h3>
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Product ID</th>
-                                        <th scope="col">Title</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Description</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $productquery = "SELECT * FROM productimgs WHERE userid=? GROUP BY productid";
-                                    $stmt2 = mysqli_prepare($conn, $productquery);
-                                    mysqli_stmt_bind_param($stmt2,'i',$user_id);
-                                    $stmt2->execute();
-                                    $productResult = $stmt2->get_result();
+                        <?php
+                        $reportquery = "
+                            SELECT r.id AS report_id, r.productid, r.reportdescription, p.path, p.description, p.price, p.title, p.productid 
+                            FROM reports r JOIN productimgs p ON r.id = '$report_id' WHERE r.userid = p.userid AND r.productid = p.productid
+                        ";
 
-                                    
-                                    foreach ($productResult as $key => $value) {
-                                        echo "<tr>
-                                            <td>{$value['productid']}</td>
-                                            <td>{$value['title']}</td>
-                                            <td>{$value['price']}</td>
-                                            <td>{$value['description']}</td>
-                                        </tr>";
-                                      }
-                                    ?>
-                                </tbody>
-                            </table>
+                        $stmt = mysqli_prepare($conn, $reportquery);
+                        $stmt->execute();
+                        $fetchreport = $stmt->get_result();
+
+                        while($rows = mysqli_fetch_assoc($fetchreport))
+                        {
+                            echo '<div class="mt-2">';
+                            echo '<h6 class="h6">Report Description :'." ".''.$rows['reportdescription'].'</h6>';
+                            echo '<h6 class="h6">Product Price :'." ".''.$rows['price'].'</h6>';
+                            echo '<h6 class="h6">Product Title :'." ".''.$rows['title'].'</h6>';
+                            echo '<h6 class="h6">Product Description :'." ".''.$rows['description'].'</h6>';
+                            echo '</div>';
+
+                            echo '<div class="text-center mt-3">';
+                            echo '<img src="../../productsimgs/'.$rows['path'].'">';
+                            echo '</div>';
+                        }
+
+                        ?>
 
                         </div>
                     </div>

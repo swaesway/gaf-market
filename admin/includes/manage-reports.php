@@ -1,5 +1,16 @@
 <?php
-include('header.php');   
+include('../../db/db.php');
+include('header.php');  
+
+$reportsquery = 'SELECT * FROM reports';
+$stmt3 = mysqli_prepare($conn,  $reportsquery);
+$stmt3->execute();
+$reportresult = $stmt3->get_result();
+if($reportresult)
+{
+  $reportcount = mysqli_num_rows($reportresult);
+}
+mysqli_stmt_close($stmt3);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +19,7 @@ include('header.php');
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - Manage Reports</title>
-
+ 
   <!-- Google Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -41,7 +52,7 @@ include('header.php');
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Report List</h5>
+              <h5 class="card-title">Reports</h5>
 
               <!-- Search Input (Handled by DataTables) -->
               <!-- <div class="input-group mb-3">
@@ -49,40 +60,68 @@ include('header.php');
                 <span class="input-group-text"><i class="bi bi-search"></i></span>
               </div> -->
 
-              <!-- Reports Table -->
-              <table class="table datatable" id="reportsTable">
+               <!-- Reports Table -->
+               <table class="table datatable table-striped" id="reportsTable">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Report Type</th>
-                    <th scope="col">Reported User</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Actions</th>
+                    <th >#</th>
+                    <th >Description</th>
+                    <th >Reported User</th>
+                    <th >Status</th>
+                    <th >Time</th>
+                    <th >Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <?php
-                  // Sample data for reports (replace with database query)
-                  $reports = [
-                    ['id' => 1, 'type' => 'Abuse', 'user' => 'johndoe', 'status' => 'Pending'],
-                    ['id' => 2, 'type' => 'Spam', 'user' => 'janedoe', 'status' => 'Resolved'],
-                    ['id' => 3, 'type' => 'Harassment', 'user' => 'alexsmith', 'status' => 'Pending']
-                  ];
-                  foreach ($reports as $report) {
-                    echo "<tr>
-                            <th scope='row'>{$report['id']}</th>
-                            <td>{$report['type']}</td>
-                            <td>{$report['user']}</td>
-                            <td><span class='badge bg-" . ($report['status'] == 'Resolved' ? 'success' : 'warning') . "'>{$report['status']}</span></td>
-                            <td>
-                              <a href='view-report.php?id={$report['id']}' class='d-flex justify-content-center'><i class='bi bi-eye'></i></a>
-                            </td>
-                          </tr>";
-                  }
-                  ?>
+                <?php
+              if ($reportresult) {
+                  $id = 0;
+
+                  // Query to join reports and users based on userid
+                  $reportsqueryjoined = "
+                      SELECT r.id AS report_id, r.userid,r.timestamp, r.productid, r.reportdescription, r.resolved AS status, u.name AS username
+                      FROM reports r 
+                      JOIN users u ON r.userid = u.id ORDER BY r.timestamp  DESC
+                  ";
+
+                  // Prepare and execute the query
+                  $stmt4 = mysqli_prepare($conn, $reportsqueryjoined);
+                  $stmt4->execute();
+                  $reportsresult = mysqli_stmt_get_result($stmt4);
+
+                // Loop through the results to display the table rows
+                while ($rows = mysqli_fetch_assoc($reportsresult)) {
+                    $id++; // Increment row number
+
+                    // Resolve status and badge
+                    $statusText = $rows['status'] == 1 ? 'Resolved' : 'Not Resolved';
+                    $statusBadge = $rows['status'] == 1 ? 'success' : 'danger';
+
+                            echo "
+                    <tr>
+                        <th scope='row'>{$id}</th>
+                        <td>{$rows['reportdescription']}</td>
+                        <td>{$rows['username']}</td>
+                        <td>
+                            <span class='badge bg-{$statusBadge}'>
+                                {$statusText}
+                            </span>
+                        </td>
+                        <td>{$rows['timestamp']}</td>
+                        <td>
+                            <a href='view-report.php?userid={$rows['userid']}&productid={$rows['productid']}&reportid={$rows['report_id']}' class='d-flex justify-content-center'>
+                                <i class='bi bi-eye'></i>
+                            </a>
+                        </td>
+                    </tr>
+                ";
+            }
+}
+?>
+
+
                 </tbody>
               </table>
-              <!-- End Reports Table -->
 
             </div>
           </div>
