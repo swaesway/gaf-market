@@ -61,7 +61,7 @@ include('header.php');
             border-radius: 0 0 8px 8px;
         }
 
-       
+
         /* Text Styling in Footer */
         .footer-text {
             font-size: 13px;
@@ -72,32 +72,35 @@ include('header.php');
         .card-link {
             display: block;
         }
+
         .footer-text {
             font-size: 13px;
             font-weight: bold;
             color: #555;
-            margin-bottom: 4px; /* Reduce distance */
+            margin-bottom: 4px;
+            /* Reduce distance */
         }
 
         .freeze-btn {
             font-size: 12px;
-            padding: 3px 6px; /* Smaller padding for reduced size */
+            padding: 3px 6px;
+            /* Smaller padding for reduced size */
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            float: right; /* Align to the right */
+            float: right;
+            /* Align to the right */
         }
-
     </style>
 </head>
 
 <body>
     <main id="main" class="main">
-    <div style="float: right;" class="">
-          <input type="search" class="form-control" name="" id="" placeholder="search products">
-          </div>
+        <div style="float: right;" class="">
+            <input type="search" class="form-control" name="" id="" placeholder="search products">
+        </div>
         <section class="section mt-3">
-          <h5>Your Products</h5>
+            <h5>Your Products</h5>
             <div class="row">
                 <?php
                 $userid = $_SESSION['userId'];
@@ -113,7 +116,7 @@ include('header.php');
                     echo "
                
               <div class='col-lg-3'>
-                <a href='updateproduct.php?productid=".$value['productid']."&id=".$value['id']."' class='card-link'>
+                <a href='updateproduct.php?productid=" . $value['productid'] . "&id=" . $value['id'] . "' class='card-link'>
                             <div class='card'>
                                 <div class='card-body'>
                                     <div class='imageupload'>
@@ -134,6 +137,10 @@ include('header.php');
                             </div>
                 ";
                 }
+
+                if (mysqli_num_rows($result) === 0) {
+                    echo '<p class="text-center fs-3">You have posted no products.</p>';
+                }
                 ?>
 
 
@@ -144,9 +151,9 @@ include('header.php');
 
     <script>
         // Initialize Bootstrap tooltips
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl);
             });
         });
