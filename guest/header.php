@@ -151,7 +151,7 @@
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar"> 
 
-  <form id="product-filter-form" method="GET" action="filter-results.php">
+  <form id="product-filter-form" method="POST" action="home.php">
     <ul class="sidebar-nav" id="sidebar-nav">
         <!-- Categories Filter -->
         <li>
