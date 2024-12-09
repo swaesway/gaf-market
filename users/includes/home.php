@@ -2,8 +2,7 @@
 include('../../db/db.php');
 include('header.php');
 
-if(isset($_POST['bookmarkbtn']))
-{
+if (isset($_POST['bookmarkbtn'])) {
     $sellerid = $_POST['sellerid'];
     $boomarkerid = $_POST['bookmarker'];
     $productid = $_POST['productid'];
@@ -11,23 +10,20 @@ if(isset($_POST['bookmarkbtn']))
 
     $query = "INSERT INTO bookmarks(productid, sellerid, bookmarker) VALUES(?,?,?)";
     $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, 'sii',$productid, $sellerid, $boomarkerid);
+    mysqli_stmt_bind_param($stmt, 'sii', $productid, $sellerid, $boomarkerid);
     $result = mysqli_stmt_execute($stmt);
-
-
 }
 
 $no_result = "";
 $searchkey = "";
 
-if(isset($_POST['searchbtn']))
-{
+if (isset($_POST['searchbtn'])) {
     $searchkey = $_POST['search'];
     $query = "SELECT * FROM productimgs 
     WHERE MATCH(title, category, description, price) AGAINST(? IN NATURAL LANGUAGE MODE) 
     GROUP BY productid";
 
-    $stmt = mysqli_prepare($conn, $query);  
+    $stmt = mysqli_prepare($conn, $query);
     $searchTerm = "%$searchkey%";
     mysqli_stmt_bind_param($stmt, 's', $searchTerm);
     $stmt->execute();
@@ -57,6 +53,55 @@ if(isset($_POST['searchbtn']))
     $result = $stmt->get_result();
 }
 
+// Filter Categories and Price Feature
+
+$no_result = "";
+$whereClauses = [];
+$params = [];
+$types = "";
+
+// Handle filter form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Handle categories filter
+    if (isset($_POST['categories']) && is_array($_POST['categories'])) {
+        $categories = $_POST['categories'];
+        $placeholders = implode(',', array_fill(0, count($categories), '?'));
+        $whereClauses[] = "category IN ($placeholders)";
+        $params = array_merge($params, $categories);
+        $types .= str_repeat('s', count($categories));
+    }
+
+    // Handle price range filter
+    if (!empty($_POST['min_price']) || !empty($_POST['max_price'])) {
+        $minPrice = $_POST['min_price'] ?? 0;
+        $maxPrice = $_POST['max_price'] ?? PHP_INT_MAX;
+
+        $whereClauses[] = "price BETWEEN ? AND ?";
+        $params[] = $minPrice;
+        $params[] = $maxPrice;
+        $types .= "ii";
+    }
+}
+
+// Construct the query
+$query = "SELECT * FROM productimgs";
+if (!empty($whereClauses)) {
+    $query .= " WHERE " . implode(' AND ', $whereClauses);
+}
+$query .= " GROUP BY productid";
+
+// Prepare and execute the query
+$stmt = mysqli_prepare($conn, $query);
+if ($stmt && !empty($params)) {
+    mysqli_stmt_bind_param($stmt, $types, ...$params);
+}
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Handle no results
+if (mysqli_num_rows($result) === 0) {
+    $no_result = "No products match your filters.";
+}
 
 ?>
 <!DOCTYPE html>
@@ -84,8 +129,8 @@ if(isset($_POST['searchbtn']))
             margin-bottom: 10px;
             padding: 8px;
         }
-        .card:hover
-        {
+
+        .card:hover {
             transform: scale(1.05);
         }
 
@@ -172,14 +217,14 @@ if(isset($_POST['searchbtn']))
                             <div class='card'>
                                 <div class='card-body'>
                                     <div class='imageupload'>
-                                        <a href='viewmore.php?productid=".$value['productid']."&sellerid=".$value['userid']."&id=".$value['id']."' class='card-link'>
+                                        <a href='viewmore.php?productid=" . $value['productid'] . "&sellerid=" . $value['userid'] . "&id=" . $value['id'] . "' class='card-link'>
                                         <img src='../../productsimgs/" . $value['path'] . "' alt=''>
                                         </a>
                                         <!-- Bookmark Icon Overlay -->
                                         <form method='POST' action='home.php'>
-                                        <input type='hidden'  name='productid' value=".$value['productid'].">
-                                        <input type='hidden' name='bookmarker' value=".$userid.">
-                                        <input type='hidden' name='sellerid' value=".$value['userid'].">
+                                        <input type='hidden'  name='productid' value=" . $value['productid'] . ">
+                                        <input type='hidden' name='bookmarker' value=" . $userid . ">
+                                        <input type='hidden' name='sellerid' value=" . $value['userid'] . ">
                                         <button class='btn' type='submit' name='bookmarkbtn'>
                                         <div class='bookmark-icon-wrapper'>
                                             <i class='bi bi-bookmarks icon' aria-label='Bookmark'></i>
@@ -201,12 +246,12 @@ if(isset($_POST['searchbtn']))
                 }
                 ?>
 
-<?php 
+                <?php
 
-if (isset($no_result)) {
-    echo '<h5 class="mt-5 text-center">'.$no_result.'</h5>';
-}
-?>
+                if (isset($no_result)) {
+                    echo '<h5 class="mt-5 text-center">' . $no_result . '</h5>';
+                }
+                ?>
 
 
             </div>
